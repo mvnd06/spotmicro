@@ -20,18 +20,18 @@ lie_down_foot_x_offset: 0.065 # Fwd/back offset of all(?) feet from default stan
 # Servo parameters
 num_servos: 12
 servo_max_angle_deg: 82.5
-RF_3: {num: 1,  center: 637,range: 757.2,direction:  1, center_angle_deg:  65.38}
-RF_2: {num: 2,  center: 424,range: 612.3,direction:  1, center_angle_deg: -57.66}
-RF_1: {num: 3,  center: 405,range: 627,direction: -1, center_angle_deg:  -29.21}
-RB_3: {num: 4,  center: 427,range: 531,direction:  1, center_angle_deg:  54.83}
-RB_2: {num: 5,  center: 380,range: 484,direction:  1, center_angle_deg: -40.91}
-RB_1: {num: 6,  center: 385,range: 480,direction:  1, center_angle_deg:  -20.61}
-LB_3: {num: 7,  center: 480,range: 634,direction:  1, center_angle_deg: -87.92}
-LB_2: {num: 8,  center: 346,range: 619,direction:  1, center_angle_deg:  58.05}
-LB_1: {num: 9,  center: 480,range: 531,direction: -1, center_angle_deg:  -63.62}
-LF_3: {num: 10, center: 563,range: 590,direction:  1, center_angle_deg: -31.58}
-LF_2: {num: 11, center: 320,range: 605,direction:  1, center_angle_deg:  57.27}
-LF_1: {num: 12, center: 380,range: 669,direction:  1, center_angle_deg:  -15.00}
+RF_3: {num: 1,  center: 426,range: 757.2,direction:  1, center_angle_deg:  65.38}
+RF_2: {num: 2,  center: 266,range: 612.3,direction:  1, center_angle_deg: -57.66}
+RF_1: {num: 3,  center: 326,range: 627,direction: -1, center_angle_deg:  -29.21}
+RB_3: {num: 4,  center: 437,range: 531,direction:  1, center_angle_deg:  54.83}
+RB_2: {num: 5,  center: 226,range: 484,direction:  1, center_angle_deg: -40.91}
+RB_1: {num: 6,  center: 316,range: 480,direction:  1, center_angle_deg:  -20.61}
+LB_3: {num: 7,  center: 186,range: 634,direction:  1, center_angle_deg: -87.92}
+LB_2: {num: 8,  center: 386,range: 619,direction:  1, center_angle_deg:  58.05}
+LB_1: {num: 9,  center: 286,range: 531,direction: -1, center_angle_deg:  -63.62}
+LF_3: {num: 10, center: 186,range: 590,direction:  1, center_angle_deg: -31.58}
+LF_2: {num: 11, center: 375,range: 605,direction:  1, center_angle_deg:  57.27}
+LF_1: {num: 12, center: 346,range: 669,direction:  1, center_angle_deg:  -15.00}
 
 # Control Parameters
 transit_tau: 0.3 # Time constant in seconds for first order filters during transition state
