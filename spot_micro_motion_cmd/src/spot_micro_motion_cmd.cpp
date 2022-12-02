@@ -305,7 +305,7 @@ LegsFootPos SpotMicroMotionCmd::getNeutralStance() {
   default_pos.left_front = {.x = 196, .y = 381, .z = 346};
   default_pos.left_back = {.x = 196, .y = 381, .z = 295};
 
-  return defaul_pos;
+  return default_pos;
 }
 
 
