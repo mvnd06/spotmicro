@@ -132,11 +132,15 @@ class SpotMicroServoControl():
         # Intialize empty servo dictionary
         self.servos = {}
 
+        # Default servo center values
+        default_centers = [404, 269, 276, 405, 233, 316, 196, 381, 295, 196, 381, 346]
+        default_directions = [1, -1, -1, 1, 1, 1, -1, 1, 1, -1, 1, -1]
+
         # Create a servo dictionary with 12 ServoConvert objects
         # keys: integers 0 through 12
         # values: ServoConvert objects
         for i in range(numServos):
-            self.servos[i] = ServoConvert(id=i)
+            self.servos[i] = ServoConvert(id=i, center_value=default_centers[i], direction=default_directions[i])
         rospy.loginfo("> Servos corrrectly initialized")
 
         # Create empty ServoArray message with n number of Servos in its array

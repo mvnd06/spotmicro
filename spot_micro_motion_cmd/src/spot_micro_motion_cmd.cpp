@@ -299,7 +299,13 @@ LegsFootPos SpotMicroMotionCmd::getNeutralStance() {
   neutral_stance.left_front  = {.x =  len/2 + f_offset, .y = 0.0f, .z = -width/2 - l1};
   neutral_stance.left_back   = {.x = -len/2 + b_offset, .y = 0.0f, .z = -width/2 - l1};
 
-  return neutral_stance;
+  LegsFootPos default_pos;
+  default_pos.right_front = {.x = 404, .y = 269, .z = 276};
+  default_pos.right_back = {.x = 405, .y = 233, .z = 316};
+  default_pos.left_front = {.x = 196, .y = 381, .z = 346};
+  default_pos.left_back = {.x = 196, .y = 381, .z = 295};
+
+  return defaul_pos;
 }
 
 
