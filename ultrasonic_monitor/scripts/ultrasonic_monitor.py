@@ -2,7 +2,7 @@
 
 import rospy
 from serial import Serial
-from std_msgs.msg import String
+from std_msgs.msg import Int32MultiArray
 
 class UltrasonicMonitor:
     def __init__(self):
@@ -16,7 +16,7 @@ class UltrasonicMonitor:
         self.serial = Serial(port=port, baudrate=baud_rate)
 
         # Create ROS publisher.
-        self.pub = rospy.Publisher('ultrasonic_data', String, queue_size=10)
+        self.pub = rospy.Publisher('ultrasonic_data', Int32MultiArray)
 
         # Start monitoring serial port.
         self.monitor()
@@ -34,8 +34,8 @@ class UltrasonicMonitor:
                 rightInches = float(rightData.split(':')[1])
 
                 # Publish data to ROS topic.
-                rospy.loginfo(f"Received data: {leftInches, rightInches}")
-                self.pub.publish(line)
+                rospy.loginfo(f"Received data -> L: {leftInches}, R: {rightInches}")
+                self.pub.publish([leftInches, rightInches])
             except:
                 rospy.logerr("Error occurred while processing data from serial port.")
                 continue
