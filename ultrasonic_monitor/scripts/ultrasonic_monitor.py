@@ -28,7 +28,7 @@ class UltrasonicMonitor:
 
             # Publish data to ROS topic
             data = line.split('|')
-            leftData, rightData = int(line[0]), int(line[1])
+            leftData, rightData = line[0], line[1]
             rospy.loginfo(f"Received data: {leftData, rightData}")
             self.pub.publish(line)
 
