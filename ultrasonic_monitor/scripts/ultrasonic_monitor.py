@@ -10,27 +10,35 @@ class UltrasonicMonitor:
         rospy.init_node('ultrasonic_monitor', anonymous=True)
         rospy.loginfo(f"Running Ultrasonic Monitor Node...")
 
-        # Open serial port
+        # Open serial port.
         port = rospy.get_param('~port', '/dev/ttyUSB0')
         baud_rate = rospy.get_param('~baud_rate', 9600)
         self.serial = Serial(port=port, baudrate=baud_rate)
 
-        # Create ROS publisher
+        # Create ROS publisher.
         self.pub = rospy.Publisher('ultrasonic_data', String, queue_size=10)
 
-        # Start monitoring serial port
+        # Start monitoring serial port.
         self.monitor()
 
     def monitor(self):
         while not rospy.is_shutdown():
-            # Read data from serial port
-            line = self.serial.readline().decode().strip()
+            try:
+                # Read data from serial port.
+                line = self.serial.readline().decode().strip()
 
-            # Publish data to ROS topic
-            data = line.split('|')
-            leftData, rightData = data[0], data[1]
-            rospy.loginfo(f"Received data: {leftData, rightData}")
-            self.pub.publish(line)
+                # Process data from serial port.
+                data = line.split('|')
+                leftData, rightData = data[0], data[1]
+                leftInches = float(leftData.split(':')[1])
+                rightInches = float(rightData.split(':')[1])
+
+                # Publish data to ROS topic.
+                rospy.loginfo(f"Received data: {leftInches, rightInches}")
+                self.pub.publish(line)
+            except:
+                rospy.logerr("Error occurred while processing data from serial port.")
+                continue
 
 if __name__ == '__main__':
     try:
