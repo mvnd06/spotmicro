@@ -23,12 +23,11 @@ class OLEDNode():
         # Make the display context
         self.splash = displayio.Group()
         self.display.show(self.splash)
-        self.color_palette = None
+        self.color_palette = displayio.Palette(1)
         self.color_bitmap = displayio.Bitmap(96, 64, 1)
-        black_palette = displayio.Palette(1)
         black_palette[0] = 0x000000  # Black
-        
-        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=black_palette, x=0, y=0)
+
+        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_bitmap, x=0, y=0)
         self.splash.append(self.bg_sprite)
                 
         self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
@@ -37,8 +36,6 @@ class OLEDNode():
     
     def color_callback(self, msg):
         rospy.loginfo(f"Recieved -> Red: {msg.r}, Green: {msg.g}, Blue: {msg.b}")
-        if self.color_palette is None:
-            self.color_palette = displayio.Palette(1)
         # Convert the RGB values to a single integer
         color_int = ((int(msg.r) << 16) | (int(msg.g) << 8) | int(msg.b))
         
