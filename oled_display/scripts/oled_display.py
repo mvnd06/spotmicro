@@ -26,7 +26,7 @@ class OLEDNode():
         self.display.show(self.splash)
         
         self.color_bitmap = displayio.Bitmap(96, 64, 1)
-        self.color_palette = displayio.Palette(1)
+        self.color_palette = None
         self.color_palette[0] = 0x000000  # Black
         
         self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
@@ -43,6 +43,8 @@ class OLEDNode():
             rospy.spin()
     
     def color_callback(self, msg):
+        if self.color_palette is None:
+            self.color_palette = displayio.Palette(1)
         # Convert the RGB values to a single integer
         color_int = ((int(msg.r) << 16) | (int(msg.g) << 8) | int(msg.b))
         
@@ -57,3 +59,31 @@ class OLEDNode():
 
 if __name__ == '__main__':
     node = OLEDNode()
+                        
+        # Make the display context
+        self.splash = displayio.Group()
+        self.display.show(self.splash)
+        self.color_palette = None
+        self.color_bitmap = displayio.Bitmap(96, 64, 1)
+        black_palette = displayio.Palette(1)
+        black_palette[0] = 0x000000  # Black
+        
+        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=black_palette, x=0, y=0)
+        self.splash.append(self.bg_sprite)
+                
+        while not rospy.is_shutdown():
+            rospy.spin()
+    
+    def color_callback(self, msg):
+        if self.color_palette == None:
+            self.color_palette = displayio.Palette(1)
+        # Convert the RGB values to a single integer
+        color_int = ((int(msg.r) << 16) | (int(msg.g) << 8) | int(msg.b))
+        
+        # Update the color palette with the new color
+        self.color_palette[0] = color_int
+        
+        # Redraw the background sprite with the new color
+        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
+        self.splash.pop(0)
+        self.splash.insert(0, self.bg_sprite)
