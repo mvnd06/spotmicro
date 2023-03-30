@@ -24,12 +24,13 @@ class UltrasonicMonitor:
     def monitor(self):
         while not rospy.is_shutdown():
             # Read data from serial port
-            line = self.serial.readline()
+            line = self.serial.readline().decode().strip()
 
             # Publish data to ROS topic
-            data = line.decode().strip()
-            rospy.loginfo(f"Received data: {data}")
-            self.pub.publish(line.decode().strip())
+            data = line.split('|').strip()
+            leftData, rightData = int(line[0]), int(line[1])
+            rospy.loginfo(f"Received data: {leftData, rightData}")
+            self.pub.publish(line)
 
 if __name__ == '__main__':
     try:
