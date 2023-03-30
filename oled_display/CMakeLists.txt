@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 2.8.3)
-project(your_package_name)
+cmake_minimum_required(VERSION 3.0.2)
+project(oled_display)
 
 find_package(catkin REQUIRED COMPONENTS rospy)
 
