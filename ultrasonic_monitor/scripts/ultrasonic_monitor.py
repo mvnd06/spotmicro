@@ -35,7 +35,9 @@ class UltrasonicMonitor:
 
             # Publish data to ROS topic.
             rospy.loginfo(f"Received data -> L: {leftInches}, R: {rightInches}")
-            self.pub.publish([leftInches, rightInches])
+            dataArray = Int32MultiArray()
+            dataArray.data = [leftInches, rightInches]
+            self.pub.publish(dataArray)
             #except:
             #    rospy.logerr("Error occurred while processing data from serial port.")
             #    continue
