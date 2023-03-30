@@ -36,16 +36,15 @@ class OLEDNode():
             rospy.spin()
     
     def color_callback(self, msg):
-        if self.color_palette is None:
-            self.color_palette = displayio.Palette(1)
         # Convert the RGB values to a single integer
         color_int = ((int(msg.r) << 16) | (int(msg.g) << 8) | int(msg.b))
-        
+        palette = displayio.Palette(1)
+
         # Update the color palette with the new color
-        self.color_palette[0] = color_int
-        
+        #self.color_palette[0] = color_int
+        palette[0] = color_int
         # Redraw the background sprite with the new color
-        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
+        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=palette, x=0, y=0)
         self.splash.pop(0)
         self.splash.insert(0, self.bg_sprite)
 
