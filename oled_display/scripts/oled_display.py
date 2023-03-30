@@ -27,7 +27,7 @@ class OLEDNode():
         self.color_bitmap = displayio.Bitmap(96, 64, 1)
         self.color_palette[0] = 0x000000  # Black
 
-        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_bitmap, x=0, y=0)
+        self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
         self.splash.append(self.bg_sprite)
                 
         self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
