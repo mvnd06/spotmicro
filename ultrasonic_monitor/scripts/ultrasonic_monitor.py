@@ -23,19 +23,19 @@ class UltrasonicMonitor:
 
     def monitor(self):
         while not rospy.is_shutdown():
-            try:
-                # Read data from serial port.
-                line = self.serial.readline().decode().strip()
+            #try:
+            # Read data from serial port.
+            line = self.serial.readline().decode().strip()
 
-                # Process data from serial port.
-                data = line.split('|')
-                leftData, rightData = data[0], data[1]
-                leftInches = float(leftData.split(':')[1])
-                rightInches = float(rightData.split(':')[1])
+            # Process data from serial port.
+            data = line.split('|')
+            leftData, rightData = data[0], data[1]
+            leftInches = float(leftData.split(':')[1])
+            rightInches = float(rightData.split(':')[1])
 
-                # Publish data to ROS topic.
-                rospy.loginfo(f"Received data -> L: {leftInches}, R: {rightInches}")
-                self.pub.publish([leftInches, rightInches])
+            # Publish data to ROS topic.
+            rospy.loginfo(f"Received data -> L: {leftInches}, R: {rightInches}")
+            self.pub.publish([leftInches, rightInches])
             #except:
             #    rospy.logerr("Error occurred while processing data from serial port.")
             #    continue
