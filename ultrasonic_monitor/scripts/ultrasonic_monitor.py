@@ -27,7 +27,7 @@ class UltrasonicMonitor:
             line = self.serial.readline().decode().strip()
 
             # Publish data to ROS topic
-            data = line.split('|').strip()
+            data = line.split('|')
             leftData, rightData = int(line[0]), int(line[1])
             rospy.loginfo(f"Received data: {leftData, rightData}")
             self.pub.publish(line)
