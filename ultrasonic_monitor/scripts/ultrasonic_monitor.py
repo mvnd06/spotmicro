@@ -36,9 +36,9 @@ class UltrasonicMonitor:
                 # Publish data to ROS topic.
                 rospy.loginfo(f"Received data -> L: {leftInches}, R: {rightInches}")
                 self.pub.publish([leftInches, rightInches])
-            except:
-                rospy.logerr("Error occurred while processing data from serial port.")
-                continue
+            #except:
+            #    rospy.logerr("Error occurred while processing data from serial port.")
+            #    continue
 
 if __name__ == '__main__':
     try:
