@@ -57,7 +57,7 @@ class OLEDNode():
         self.splash.insert(0, self.bg_sprite)
 
     def animation_callback(self, msg):
-        rospy.loginfo("Starting animatio....")
+        rospy.loginfo("Starting animation...")
         animation_group = displayio.Group()
 
         #  load the spritesheet
@@ -78,6 +78,8 @@ class OLEDNode():
 
         while True:
             if (timer + 0.1) < time.monotonic():
+                log.info(timer)
+                log.info(pointer)
                 icon_grid[0] = pointer
                 pointer += 1
                 timer = time.monotonic()
