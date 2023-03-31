@@ -65,7 +65,7 @@ class OLEDNode():
         bmp_files = [f for f in os.listdir(folder_path) if f.endswith('.bmp')]
 
         for bmp_file in bmp_files:
-            with Image.open(os.path.join(folder_path, bmp_file), 'rb') as file:
+            with Image.open(os.path.join(folder_path, bmp_file)) as file:
                 rgb_image = file.convert('RGB')
                 rgb565_image = rgb_image.quantize(colors=65536, method=2).convert('RGB;16')
                 bmp, palette = imageLoad(rgb565_image, bitmap=displayio.Bitmap, palette=displayio.Palette)
