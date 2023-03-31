@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 
-import rospy
+import rospy, time
 from std_msgs.msg import ColorRGBA
 import board, busio, displayio
 from adafruit_ssd1331 import SSD1331
 import adafruit_imageload
+import pkg_resources
+
+HOME_ANIMATION_FILE = pkg_resources.resource_filename('oled_display', 'resources/home_animation.bmp')
+SPRITE_SIZE = (64, 64)
+HOME_ANIMATION_FRAMES = 303
 
 class OLEDNode():
     def __init__(self):
@@ -50,5 +55,35 @@ class OLEDNode():
         self.splash.pop(0)
         self.splash.insert(0, self.bg_sprite)
 
+    def animation_callback(self, msg):
+        rospy.loginfo("Starting animatio....")
+        displayio.release_displays()
+        animation_group = displayio.Group()
+
+        #  load the spritesheet
+        icon_bit, icon_pal = adafruit_imageload.load(HOME_ANIMATION_FILE,
+                                                        bitmap=displayio.Bitmap,
+                                                        palette=displayio.Palette)
+        icon_grid = displayio.TileGrid(icon_bit, pixel_shader=icon_pal,
+                                        width=1, height=1,
+                                        tile_height=SPRITE_SIZE[1], tile_width=SPRITE_SIZE[0],
+                                        default_tile=0,
+                                        x=32, y=0)
+
+        animation_group.append(icon_grid)
+        self.display.show(animation_group)
+
+        timer = 0
+        pointer = 0
+
+        while True:
+            if (timer + 0.1) < time.monotonic():
+                icon_grid[0] = pointer
+                pointer += 1
+                timer = time.monotonic()
+                if pointer > HOME_ANIMATION_FRAMES - 1:
+                    pointer = 0
+
 if __name__ == '__main__':
     node = OLEDNode() 
+    node.animation_callback("test")
