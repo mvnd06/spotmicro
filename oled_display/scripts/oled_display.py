@@ -61,7 +61,7 @@ class OLEDNode():
 
         # Load and display all BMP files in folder
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        folder_path = os.path.join(script_dir, '/resources/home_animation')
+        folder_path = '~/catkin_ws/src/oled_display/scripts/resources/home_animation'
         bmp_files = [f for f in os.listdir(folder_path) if f.endswith('.bmp')]
 
         for bmp_file in bmp_files:
