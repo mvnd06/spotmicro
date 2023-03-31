@@ -38,8 +38,9 @@ class UltrasonicMonitor:
                 dataArray = Int32MultiArray()
                 dataArray.data = [leftInches, rightInches]
                 self.pub.publish(dataArray)
-            except:
+            except Exception as e:
                rospy.logerr("Error occurred while processing data from serial port.")
+               rospy.logerr(e)
                continue
 
 if __name__ == '__main__':
