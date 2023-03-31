@@ -58,7 +58,6 @@ class OLEDNode():
 
     def animation_callback(self, msg):
         rospy.loginfo("Starting animatio....")
-        displayio.release_displays()
         animation_group = displayio.Group()
 
         #  load the spritesheet
