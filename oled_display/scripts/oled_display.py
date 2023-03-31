@@ -24,10 +24,10 @@ class OLEDNode():
         png_files = [f for f in os.listdir(folder_path) if f.endswith('.png')]
         images = []
         for png_file in png_files:
-            image, palette = imageload(os.path.join(folder_path, png_file))
-            images.append(image)
+            with open(os.path.join(folder_path, png_file), "rb") as f:
+                print(type(f))
+                images.append(imageload(bytes(f)))
         self.images = images
-        print(images)
         
         # Configure display.
         mosi_pin, clk_pin, reset_pin, cs_pin, dc_pin = board.D10, board.D11, board.D25, board.D8, board.D24
