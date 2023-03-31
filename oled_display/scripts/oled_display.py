@@ -22,6 +22,7 @@ class OLEDNode():
         # Load and display all PNG files in folder
         folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/home_animation/'
         png_files = [f for f in os.listdir(folder_path) if f.endswith('.png')]
+        print(png_files)
         images = []
         for png_file in png_files:
             with open(os.path.join(folder_path, png_file), "rb") as f:
