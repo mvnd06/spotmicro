@@ -61,7 +61,7 @@ class OLEDNode():
         rospy.loginfo("Starting animation...")
 
         # Load and display all BMP files in folder
-        folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/clock_animation/'
+        folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/'
         bmp_files = [f for f in os.listdir(folder_path) if f.endswith('.bmp')]
 
         for bmp_file in bmp_files:
