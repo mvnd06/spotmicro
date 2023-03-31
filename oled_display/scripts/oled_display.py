@@ -70,6 +70,7 @@ class OLEDNode():
         rospy.loginfo("Starting animation...")
 
         for image in self.images:
+            rospy.loginfo(image)
             bmp, palette = image
                     
             sprite = displayio.TileGrid(bmp, pixel_shader=palette, x=0, y=0)
