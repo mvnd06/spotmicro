@@ -22,12 +22,12 @@ class OLEDNode():
         # Load and display all PNG files in folder
         folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/home_animation/'
         png_files = [f for f in os.listdir(folder_path) if f.endswith('.png')]
-        print(png_files)
         images = []
         for png_file in png_files:
-            with open(os.path.join(folder_path, png_file), "rb") as f:
-                images.append(imageload(bytes(f)))
+            image, palette = imageload(os.path.join(folder_path, png_file))
+            images.append(image)
         self.images = images
+        print(images)
         
         # Configure display.
         mosi_pin, clk_pin, reset_pin, cs_pin, dc_pin = board.D10, board.D11, board.D25, board.D8, board.D24
