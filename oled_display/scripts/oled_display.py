@@ -66,9 +66,7 @@ class OLEDNode():
 
         for bmp_file in bmp_files:
             with Image.open(os.path.join(folder_path, bmp_file)) as file:
-                rgb_image = file.convert('RGB')
-                rgb565_image = rgb_image.quantize(colors=128, method=2).convert('RGB;16')
-                bmp, palette = imageLoad(rgb565_image, bitmap=displayio.Bitmap, palette=displayio.Palette)
+                bmp, palette = imageLoad(file, bitmap=displayio.Bitmap, palette=displayio.Palette)
                 
                 sprite = displayio.TileGrid(bmp, pixel_shader=palette, x=0, y=0)
                 
