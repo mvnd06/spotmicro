@@ -11,9 +11,11 @@ BLACK = ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)
 class DisplayManager:
     def __init__(self):
         rospy.init_node('display_manager')
+        rospy.loginfo(f"Running Display Manager Node...")
+
         self.current_color = BLACK
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
-        rospy.Subscriber('ultrasonic_data', String, self.ultrasonic_callback)
+        rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
 
     def ultrasonic_callback(self, msg):
         # Parse the incoming message to extract the left and right distance values
