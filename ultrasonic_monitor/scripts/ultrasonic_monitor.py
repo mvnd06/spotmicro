@@ -32,14 +32,14 @@ class UltrasonicMonitor:
                 leftData, rightData = data[0], data[1]
                 leftInches = int(float(leftData.split(':')[1]))
                 rightInches = int(float(rightData.split(':')[1]))
-                rospy.loginfo(f"Received data -> L: {leftInches}, R: {rightInches}")
+                rospy.logdebug(f"Received data -> L: {leftInches}, R: {rightInches}")
 
                 # Publish data to ROS topic.
                 dataArray = Int32MultiArray()
                 dataArray.data = [leftInches, rightInches]
                 self.pub.publish(dataArray)
             except Exception as e:
-               rospy.logerr("Error occurred while processing data from serial port.")
+               rospy.logwarn("Error occurred while processing data from serial port.")
                rospy.logerr(e)
                continue
 
