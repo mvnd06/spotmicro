@@ -5,7 +5,7 @@ import rospy, time, os
 from std_msgs.msg import ColorRGBA
 import board, busio, displayio
 from adafruit_ssd1331 import SSD1331
-from adafruit_imageload import load as imageLoad
+from adafruit_imageload import load as imageload
 import pkg_resources
 
 HOME_ANIMATION_FILE = pkg_resources.resource_filename('oled_display', 'resources/home_animation.bmp')
@@ -18,6 +18,15 @@ class OLEDNode():
         rospy.loginfo(f"Running OLED Display Node...")
 
         displayio.release_displays()
+
+        # Load and display all PNG files in folder
+        folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/'
+        png_files = [f for f in os.listdir(folder_path) if f.endswith('.png')]
+        images = []
+        for png_file in png_files:
+            with open(os.path.join(folder_path, png_file), "rb") as f:
+                images.append(imageload(f))
+        self.images = images
         
         # Configure display.
         mosi_pin, clk_pin, reset_pin, cs_pin, dc_pin = board.D10, board.D11, board.D25, board.D8, board.D24
@@ -60,25 +69,16 @@ class OLEDNode():
     def home_animation(self):
         rospy.loginfo("Starting animation...")
 
-        # Load and display all BMP files in folder
-        folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/'
-        bmp_files = [f for f in os.listdir(folder_path) if f.endswith('.bmp')]
-
-        for bmp_file in bmp_files:
-            with open(os.path.join(folder_path, bmp_file), 'rb') as file:
-
-                bmp, palette = imageLoad(file, bitmap=displayio.Bitmap, palette=displayio.Palette)
-                
-                sprite = displayio.TileGrid(bmp, pixel_shader=palette, x=0, y=0)
-                
-                group = displayio.Group(max_size=1)
-                group.append(sprite)
-                
-                display.show(group)
-                display.refresh()
-                time.sleep(0.1)  # Change this delay to adjust the animation speed
-
-
+        for image in self.images:
+            bmp, palette = image
+                    
+            sprite = displayio.TileGrid(bmp, pixel_shader=palette, x=0, y=0)
+                    
+            self.splash.pop(0)
+            self.splash.append(sprite)
+            
+            display.refresh()
+            time.sleep(0.1)  # Change this delay to adjust the animation speed
 
 if __name__ == '__main__':
     node = OLEDNode() 
