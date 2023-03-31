@@ -30,8 +30,8 @@ class UltrasonicMonitor:
                 # Process data from serial port.
                 data = line.split('|')
                 leftData, rightData = data[0], data[1]
-                leftInches = float(leftData.split(':')[1])
-                rightInches = float(rightData.split(':')[1])
+                leftInches = int(leftData.split(':')[1])
+                rightInches = int(rightData.split(':')[1])
                 rospy.loginfo(f"Received data -> L: {leftInches}, R: {rightInches}")
 
                 # Publish data to ROS topic.
