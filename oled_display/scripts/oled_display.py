@@ -4,6 +4,7 @@ import rospy
 from std_msgs.msg import ColorRGBA
 import board, busio, displayio
 from adafruit_ssd1331 import SSD1331
+import adafruit_imageload
 
 class OLEDNode():
     def __init__(self):
@@ -50,4 +51,4 @@ class OLEDNode():
         self.splash.insert(0, self.bg_sprite)
 
 if __name__ == '__main__':
-    node = OLEDNode()
+    node = OLEDNode() 
