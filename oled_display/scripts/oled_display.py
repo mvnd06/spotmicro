@@ -4,7 +4,7 @@ import rospy, time, os
 from std_msgs.msg import ColorRGBA
 import board, busio, displayio
 from adafruit_ssd1331 import SSD1331
-from adafruit_imageload import load as iload
+from adafruit_imageload import load as imageLoad
 import pkg_resources
 
 HOME_ANIMATION_FILE = pkg_resources.resource_filename('oled_display', 'resources/home_animation.bmp')
@@ -64,8 +64,10 @@ class OLEDNode():
         bmp_files = [f for f in os.listdir(folder_path) if f.endswith('.bmp')]
 
         for bmp_file in bmp_files:
-            with open(os.path.join(folder_path, bmp_file), 'rb') as f:
-                bmp, palette = iload(f, bitmap=displayio.Bitmap, palette=displayio.Palette)
+            with open(os.path.join(folder_path, bmp_file), 'rb') as file:
+                rgb_image = file.convert('RGB')
+                rgb565_image = rgb_image.quantize(colors=65536, method=2).convert('RGB;16')
+                bmp, palette = imageLoad(rgb565_image, bitmap=displayio.Bitmap, palette=displayio.Palette)
                 
                 sprite = displayio.TileGrid(bmp, pixel_shader=palette, x=0, y=0)
                 
