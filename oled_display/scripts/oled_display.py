@@ -26,7 +26,7 @@ class OLEDNode():
         for png_file in png_files:
             with open(os.path.join(folder_path, png_file), "rb") as f:
                 print(type(f))
-                images.append(imageload(bytes(f)))
+                images.append(imageload(f))
         self.images = images
         
         # Configure display.
