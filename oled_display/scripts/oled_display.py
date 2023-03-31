@@ -65,7 +65,8 @@ class OLEDNode():
         bmp_files = [f for f in os.listdir(folder_path) if f.endswith('.bmp')]
 
         for bmp_file in bmp_files:
-            with Image.open(os.path.join(folder_path, bmp_file)) as file:
+            with open(os.path.join(folder_path, bmp_file), "rd") as file:
+
                 bmp, palette = imageLoad(file, bitmap=displayio.Bitmap, palette=displayio.Palette)
                 
                 sprite = displayio.TileGrid(bmp, pixel_shader=palette, x=0, y=0)
