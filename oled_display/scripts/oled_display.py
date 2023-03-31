@@ -37,7 +37,7 @@ class OLEDNode():
             rospy.spin()
     
     def color_callback(self, msg):
-        rospy.loginfo(f"Recieved -> Red: {msg.r}, Green: {msg.g}, Blue: {msg.b}")
+        rospy.logdebug(f"Recieved -> Red: {msg.r}, Green: {msg.g}, Blue: {msg.b}")
         # Convert RGB values to a single integer.
         color_int = ((int(msg.r) << 16) | (int(msg.g) << 8) | int(msg.b))
         
