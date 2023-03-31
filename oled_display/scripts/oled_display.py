@@ -20,7 +20,7 @@ class OLEDNode():
         displayio.release_displays()
 
         # Load and display all PNG files in folder
-        folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/'
+        folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/home_animation/'
         png_files = [f for f in os.listdir(folder_path) if f.endswith('.png')]
         images = []
         for png_file in png_files:
