@@ -60,7 +60,7 @@ class OLEDNode():
         rospy.loginfo("Starting animation...")
 
         # Load and display all BMP files in folder
-        folder_path = '/resources/home_animation'
+        folder_path = '../resources/home_animation/'
         bmp_files = [f for f in os.listdir(folder_path) if f.endswith('.bmp')]
 
         for bmp_file in bmp_files:
