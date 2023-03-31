@@ -16,7 +16,7 @@ class UltrasonicMonitor:
         self.serial = Serial(port=port, baudrate=baud_rate)
 
         # Create ROS publisher.
-        self.pub = rospy.Publisher('ultrasonic_data', Int32MultiArray)
+        self.pub = rospy.Publisher('ultrasonic_data', Int32MultiArray, queue_size=10)
 
         # Start monitoring serial port.
         self.monitor()
