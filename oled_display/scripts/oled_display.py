@@ -40,6 +40,7 @@ class OLEDNode():
         self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
 
         while not rospy.is_shutdown():
+            node.animation_callback("test")
             rospy.spin()
     
     def color_callback(self, msg):
@@ -86,4 +87,3 @@ class OLEDNode():
 
 if __name__ == '__main__':
     node = OLEDNode() 
-    node.animation_callback("test")
