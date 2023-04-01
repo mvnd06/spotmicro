@@ -45,7 +45,8 @@ class OLEDNode():
             rospy.spin()
     
     def color_callback(self, msg):
-        self.group.clear()
+        while len(self.group):
+            self.group.pop()
         rospy.logdebug(f"Recieved -> Red: {msg.r}, Green: {msg.g}, Blue: {msg.b}")
         # Convert RGB values to a single integer.
         color_int = ((int(msg.r) << 16) | (int(msg.g) << 8) | int(msg.b))
@@ -59,7 +60,8 @@ class OLEDNode():
 
     def text_callback(self, msg):
         rospy.loginfo("Received text...")
-        self.group.clear()
+        while len(self.group):
+            self.group.pop()
 
         topPadding = 5.0
         spacing = 12.0
