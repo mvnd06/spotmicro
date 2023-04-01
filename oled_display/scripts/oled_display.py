@@ -3,7 +3,7 @@
 from PIL import Image
 import rospy, time, os
 from std_msgs.msg import ColorRGBA
-import board, busio, displayio
+import board, busio, displayio, terminalio
 from adafruit_ssd1331 import SSD1331
 from adafruit_display_text import label
 import pkg_resources
@@ -38,7 +38,7 @@ class OLEDNode():
         self.group.append(self.bg_sprite)
 
         # Subscribe to `oled_color` topic.        
-        self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
+        # self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
 
         self.text_callback(["test1", "test2"])
 
