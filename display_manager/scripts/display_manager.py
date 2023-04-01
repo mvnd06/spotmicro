@@ -32,10 +32,7 @@ class DisplayManager:
         self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
-
         rospy.Timer(rospy.Duration(1), self.publish_system_stats)
-        rospy.loginfo("End of init")
-
 
     # Callback Methods
 
@@ -44,7 +41,7 @@ class DisplayManager:
             return
         # Parse the incoming message to extract the left and right distance values
         left_dist, right_dist = msg.data[0], msg.data[1]
-        rospy.loginfo(f"Received data: {left_dist}, {right_dist}")
+        rospy.logdegug(f"Received data: {left_dist}, {right_dist}")
 
         # Determine if the distance is close enough to trigger an alert
         if (left_dist < 5 or right_dist < 5):
@@ -64,7 +61,9 @@ class DisplayManager:
         self.color_pub.publish(self.current_color)
 
     def publish_system_stats(self):
+        rospy.loginfo(f"publish_system_stats")
         if self.system_monitor.paused:
+            rospy.loginfo(f"publish_system_stats early return")
             return
         self.system_monitor.update()
         stats_array = [
@@ -79,6 +78,8 @@ class DisplayManager:
             rospy.loginfo(f"Printing: {stats_str}")
             self.text_pub.publish(stats_str)
             self.current_text = stats_str
+        else:
+            rospy.loginfo('no change')
 
     # Helper Methods
 
@@ -100,6 +101,8 @@ class DisplayManager:
         if self.screen_mode == ScreenMode.STATIC:
             self.static_screen()
         elif self.screen_mode == ScreenMode.MONITOR:
+            self.current_color = BLACK
+            self.publish_color()
             self.system_monitor.resume()
         
 if __name__ == '__main__':
