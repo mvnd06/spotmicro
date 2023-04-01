@@ -41,7 +41,7 @@ class DisplayManager:
             return
         # Parse the incoming message to extract the left and right distance values
         left_dist, right_dist = msg.data[0], msg.data[1]
-        rospy.logdegug(f"Received data: {left_dist}, {right_dist}")
+        rospy.logdebug(f"Received data: {left_dist}, {right_dist}")
 
         # Determine if the distance is close enough to trigger an alert
         if (left_dist < 5 or right_dist < 5):
