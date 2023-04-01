@@ -15,23 +15,30 @@ class SystemMonitor:
     def update(self):
         # Get IP address
         cmd = "hostname -I | cut -d\' \' -f1 | head --bytes -1"
-        self.ip = subprocess.check_output(cmd, shell=True).decode().strip()
+        ipString = subprocess.check_output(cmd, shell=True).decode().strip()
+        self.ip = f"IP: {ipString}"
 
         # Get CPU usage
         cmd = "top -bn1 | grep load | awk '{printf \"%.2fLA\", $(NF-2)}'"
-        self.cpu = subprocess.check_output(cmd, shell=True).decode().strip()
+        cpuString = subprocess.check_output(cmd, shell=True).decode().strip()
+        self.cpu = f"CPU: {cpuString}"
 
         # Get memory usage
         cmd = "free -m | awk 'NR==2{printf \"%.2f%%\", $3*100/$2 }'"
-        self.mem_usage = subprocess.check_output(cmd, shell=True).decode().strip()
+        memString = subprocess.check_output(cmd, shell=True).decode().strip()
+        self.mem_usage = f"MEM: {memString}"
 
         # Get disk usage
         cmd = "df -h | awk '$NF==\"/\"{printf \"%d/%dGB\", $3,$2}'"
-        self.disk = subprocess.check_output(cmd, shell=True).decode().strip()
+        diskString = subprocess.check_output(cmd, shell=True).decode().strip()
+        self.disk = f"DISK: {diskString}"
 
         # Get temperature
         cmd = "vcgencmd measure_temp | cut -d '=' -f 2 | head --bytes -1"
-        self.temperature = subprocess.check_output(cmd, shell=True).decode().strip()
+        temp_celsius = float(subprocess.check_output(cmd, shell=True).decode().strip())
+        temp_fahrenheit = temp_celsius * 1.8 + 32
+        tempString = f"{temp_fahrenheit:.2f} F"
+        self.temperature = f"TEMP: {tempString}"
 
     def pause(self):
         self.paused = True
