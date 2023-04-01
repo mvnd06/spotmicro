@@ -66,7 +66,7 @@ class OLEDNode():
         topPadding = 5.0
         spacing = 12.0
         y = topPadding
-        x = 5
+        x = 3
 
         lines = msg.data.split('|')
         rospy.loginfo(lines)

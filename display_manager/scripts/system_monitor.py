@@ -11,6 +11,7 @@ class SystemMonitor:
         self.disk = ""
         self.temperature = ""
         self.paused = False
+        self.update() # set initial values.
 
     def update(self):
         # Get IP address
