@@ -34,7 +34,7 @@ class DisplayManager:
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
 
-        self.run()
+            rospy.Timer(rospy.Duration(1), self.publish_system_stats)
 
     # Callback Methods
 
@@ -84,12 +84,6 @@ class DisplayManager:
         self.current_color = PURPLE
         self.publish_color()
         
-    def run(self):
-        rate = rospy.Rate(1)
-        while not rospy.is_shutdown():
-            self.publish_system_stats()
-            rate.sleep()
-
     def update_mode(self):
         # Prepare for transition.
         if self.screen_mode == ScreenMode.MONITOR:
