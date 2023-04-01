@@ -7,4 +7,7 @@
 
   <!-- Launch display_manager node -->
   <node name="display_manager" pkg="display_manager" type="display_manager.py" output="screen"/>
+
+  <!-- Launch oled_display node -->
+  <node name="oled_display" pkg="oled_display" type="oled_display.py" output="screen"/>
 </launch>
