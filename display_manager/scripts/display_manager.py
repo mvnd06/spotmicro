@@ -26,13 +26,14 @@ class DisplayManager:
 
         self.screen_mode = ScreenMode.ULTRASONIC
         self.system_monitor = SystemMonitor()
+        self.system_monitor.pause()
         self.button_taps = 0
 
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
         self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
-        rospy.Timer(rospy.Duration(1), self.publish_system_stats)
+        rospy.Timer(rospy.Duration(5), self.publish_system_stats)
 
     # Callback Methods
 
@@ -61,9 +62,7 @@ class DisplayManager:
         self.color_pub.publish(self.current_color)
 
     def publish_system_stats(self, event):
-        rospy.loginfo(f"publish_system_stats")
         if self.system_monitor.paused:
-            rospy.loginfo(f"publish_system_stats early return")
             return
         self.system_monitor.update()
         stats_array = [
@@ -75,11 +74,9 @@ class DisplayManager:
         ]
         stats_str = '|'.join(stats_array)
         if self.current_text != stats_str:
-            rospy.loginfo(f"Printing: {stats_str}")
+            rospy.logdebug(f"Printing Stats:\n {stats_str}")
             self.text_pub.publish(stats_str)
             self.current_text = stats_str
-        else:
-            rospy.loginfo('no change')
 
     # Helper Methods
 
