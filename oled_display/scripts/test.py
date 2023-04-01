@@ -3,14 +3,12 @@
 # Raspberry Pi Pico: http://educ8s.tv/part/RaspberryPiPico
 # ESP32-S2 Board: http://educ8s.tv/part/esp32s2
 
-import board, busio, displayio, os
-import terminalio #Just a font
+import board, busio, displayio
+import terminalio # Font
 from adafruit_ssd1331 import SSD1331
 from adafruit_display_text import label
 
 displayio.release_displays()
-
-board_type = os.uname().machine
 print("Running test display script..")
 
 mosi_pin, clk_pin, reset_pin, cs_pin, dc_pin = board.D10, board.D11, board.D25, board.D8, board.D24
