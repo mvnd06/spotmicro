@@ -100,6 +100,7 @@ class DisplayManager:
             self.current_color = BLACK
             self.publish_color()
             self.system_monitor.resume()
+            self.publish_system_stats(None)
         
 if __name__ == '__main__':
     try:
