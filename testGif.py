@@ -42,7 +42,8 @@ for i, frame in enumerate(frames):
     frame = frame.transpose(method=Image.TRANSPOSE)
 
     # Load the frame onto the screen
-    bitmap, palette = adafruit_imageload.load(frame.tobytes(), bitmap=displayio.Bitmap, palette=displayio.Palette)
+    with open(gif_path, "rb") as file:
+        bitmap, palette = adafruit_imageload.load(file, bitmap=displayio.Bitmap, palette=displayio.Palette)
 
     sprite = displayio.TileGrid(bitmap, pixel_shader=palette)
     group = displayio.Group(max_size=1)
