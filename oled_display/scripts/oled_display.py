@@ -65,12 +65,11 @@ class OLEDNode():
         topPadding = 5.0
         spacing = 12.0
         y = topPadding
-        x = 3
 
         lines = msg.data.split('|')
         rospy.logdebug(f"Received text: {lines}")
         for line in lines:
-            text_area = label.Label(terminalio.FONT, text=line, color=0xFFFF00, x=x, y=y)
+            text_area = label.Label(terminalio.FONT, text=line, color=0xFFFF00, x=0, y=y)
             y += spacing
             self.group.append(text_area)
 
