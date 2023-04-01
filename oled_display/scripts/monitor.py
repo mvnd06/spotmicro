@@ -1,9 +1,6 @@
-import time
-import board
-import busio
-import digitalio
-
 from PIL import Image, ImageDraw, ImageFont
+import time
+import board, busio, digitalio, displayio
 from adafruit_ssd1331 import SSD1331
 
 import subprocess
