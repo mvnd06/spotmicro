@@ -89,7 +89,9 @@ class DisplayManager:
             self.system_monitor.pause()
         
         # Update mode.
-        self.screen_mode = self.button_taps % len(ScreenMode)
+        modes =  list(ScreenMode)
+        index = self.button_taps % len(ScreenMode)
+        self.screen_mode = modes[index]
 
         # Mode startup tasks.
         if self.screen_mode == ScreenMode.STATIC:
