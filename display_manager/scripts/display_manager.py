@@ -28,7 +28,6 @@ class DisplayManager:
         self.button_taps = 0
 
         self.system_monitor = SystemMonitor()
-        self.system_monitor.pause()
 
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
         self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
