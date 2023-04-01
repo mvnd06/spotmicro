@@ -21,7 +21,7 @@ class DisplayManager:
 
         self.current_color = BLACK
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
-        self.screen_toggle = ScreenMode.ULTRASONIC
+        self.screen_mode = ScreenMode.ULTRASONIC
 
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
