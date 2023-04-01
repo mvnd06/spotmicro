@@ -35,6 +35,8 @@ class DisplayManager:
         rospy.Subscriber('button_press', Empty, self.button_callback)
 
         rospy.Timer(rospy.Duration(1), self.publish_system_stats)
+        rospy.loginfo("End of init")
+
 
     # Callback Methods
 
