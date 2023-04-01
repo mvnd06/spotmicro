@@ -2,6 +2,7 @@
 
 import rospy
 from std_msgs.msg import Int32MultiArray, ColorRGBA, Empty
+from enum import Enum
 
 RED = ColorRGBA(r=255.0, g=0.0, b=0.0, a=1.0)
 GREEN = ColorRGBA(r=0.0, g=255.0, b=0.0, a=1.0)
