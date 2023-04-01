@@ -39,11 +39,12 @@ class DisplayManager:
     # Callback Methods
 
     def ultrasonic_callback(self, msg):
+        rospy.loginfo('ultrasonic_callback')
         if self.screen_mode != ScreenMode.ULTRASONIC:
             return
         # Parse the incoming message to extract the left and right distance values
         left_dist, right_dist = msg.data[0], msg.data[1]
-        rospy.logdebug(f"Received data: {left_dist}, {right_dist}")
+        rospy.loginfo(f"Received data: {left_dist}, {right_dist}")
 
         # Determine if the distance is close enough to trigger an alert
         if (left_dist < 5 or right_dist < 5):
@@ -53,6 +54,7 @@ class DisplayManager:
         self.publish_color()
 
     def button_callback(self, msg):
+        rospy.loginfo('button_callback')
         rospy.loginfo(self.button_taps)
         self.button_taps += 1
         self.update_mode()
@@ -60,10 +62,13 @@ class DisplayManager:
     # Publish Methods
 
     def publish_color(self):
+        rospy.loginfo('publish_color')
         self.color_pub.publish(self.current_color)
 
     def publish_system_stats(self):
+        rospy.loginfo('publish_system_stats')
         if self.system_monitor.paused:
+            rospy.loginfo('publish_system_stats early return')
             return
         stats_array = [
             self.system_monitor.ip,
@@ -81,10 +86,12 @@ class DisplayManager:
     # Helper Methods
 
     def static_screen(self):
+        rospy.loginfo('static_screen')
         self.current_color = PURPLE
         self.publish_color()
         
     def update_mode(self):
+        rospy.loginfo('update_mode')
         # Prepare for transition.
         if self.screen_mode == ScreenMode.MONITOR:
             self.system_monitor.pause()
