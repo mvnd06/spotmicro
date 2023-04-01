@@ -24,7 +24,7 @@ spi = busio.SPI(clock=clk_pin, MOSI=mosi_pin)
 display_bus = displayio.FourWire(spi, command=dc_pin, chip_select=cs_pin, reset=reset_pin)
 display = SSD1331(display_bus, width=96, height=64)
 
-group = displayio.Group(max_size=10)
+group = displayio.Group()
 display.show(group)
 
 # Clear display.
