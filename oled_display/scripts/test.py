@@ -6,7 +6,7 @@
 import board, busio, displayio, os
 import terminalio #Just a font
 from adafruit_ssd1331 import SSD1331
-#from adafruit_display_text import label
+from adafruit_display_text import label
 
 displayio.release_displays()
 
@@ -40,9 +40,9 @@ inner_sprite = displayio.TileGrid(inner_bitmap, pixel_shader=inner_palette, x=5,
 splash.append(inner_sprite)
 
 # Draw a label
-#text = "Hello World!"
-#text_area = label.Label(terminalio.FONT, text=text, color=0xFFFF00, x=12, y=32)
-#splash.append(text_area)
+text = "Hello World!"
+text_area = label.Label(terminalio.FONT, text=text, color=0xFFFFFF, x=12, y=32)
+splash.append(text_area)
 
 while True:
     pass
