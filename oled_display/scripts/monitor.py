@@ -28,12 +28,39 @@ display = SSD1331(display_bus, width=96, height=64)
 group = displayio.Group()
 display.show(group)
 
-# Clear display.
-displayio.release_displays()
+# Define font and size
+font = ImageFont.truetype("arial.ttf", 10)
 
-text = "Hello World!"
-text_area = label.Label(terminalio.FONT, text=text, color=0xFFFF00, x=12, y=32)
-group.append(text_area)
+# Define text for 5 lines
+line1 = "Line 1"
+line2 = "Line 2"
+line3 = "Line 3"
+line4 = "Line 4"
+line5 = "Line 5"
+
+# Define y positions for 5 lines
+y1 = 0
+y2 = 12
+y3 = 24
+y4 = 36
+y5 = 48
+
+# Create 5 text areas with different y positions
+text_area1 = label.Label(font, text=line1, color=0xFFFF00, x=0, y=y1)
+group.append(text_area1)
+
+text_area2 = label.Label(font, text=line2, color=0xFFFF00, x=0, y=y2)
+group.append(text_area2)
+
+text_area3 = label.Label(font, text=line3, color=0xFFFF00, x=0, y=y3)
+group.append(text_area3)
+
+text_area4 = label.Label(font, text=line4, color=0xFFFF00, x=0, y=y4)
+group.append(text_area4)
+
+text_area5 = label.Label(font, text=line5, color=0xFFFF00, x=0, y=y5)
+group.append(text_area5)
+
 
 # # Create blank image for drawing.
 # # Make sure to create image with mode '1' for 1-bit color.
