@@ -24,7 +24,7 @@ class DisplayManager:
         self.current_color = BLACK
         self.current_text = ''
 
-        self.screen_mode = ScreenMode.ULTRASONIC
+        self.screen_mode = ScreenMode.MONITOR
         self.button_taps = 0
 
         self.system_monitor = SystemMonitor()
