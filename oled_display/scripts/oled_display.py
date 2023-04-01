@@ -69,6 +69,7 @@ class OLEDNode():
         x = 5
 
         lines = msg.data.split('\n')
+        rospy.loginfo(lines)
         for line in lines:
             text_area = label.Label(terminalio.FONT, text=line, color=0xFFFF00, x=x, y=y)
             y += spacing
