@@ -25,8 +25,8 @@ display_bus = displayio.FourWire(spi, command=dc_pin, chip_select=cs_pin, reset=
 display = SSD1331(display_bus, width=96, height=64)
 
 # Clear display.
-display.fill(0)
-display.show()
+image = Image.new("RGB", (display.width, display.height), (0, 0, 0))
+display.show(image)
 
 # Create blank image for drawing.
 # Make sure to create image with mode '1' for 1-bit color.
