@@ -60,7 +60,7 @@ class DisplayManager:
     def publish_color(self):
         self.color_pub.publish(self.current_color)
 
-    def publish_system_stats(self):
+    def publish_system_stats(self, event):
         rospy.loginfo(f"publish_system_stats")
         if self.system_monitor.paused:
             rospy.loginfo(f"publish_system_stats early return")
