@@ -31,6 +31,7 @@ display.show(group)
 # Clear display.
 # image = Image.new("RGB", (display.width, display.height), (255, 0, 0))text = "Hello World!"
 
+text = "Hello World!"
 text_area = label.Label(terminalio.FONT, text=text, color=0xFFFF00, x=12, y=32)
 group.append(text_area)
 
