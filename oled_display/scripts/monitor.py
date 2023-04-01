@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 import time
 import board, busio, digitalio, displayio, terminalio
 from adafruit_ssd1331 import SSD1331
+from adafruit_display_text import label
 
 import subprocess
 
@@ -28,8 +29,10 @@ group = displayio.Group()
 display.show(group)
 
 # Clear display.
-image = Image.new("RGB", (display.width, display.height), (255, 0, 0))
-group.append(image)
+# image = Image.new("RGB", (display.width, display.height), (255, 0, 0))text = "Hello World!"
+
+text_area = label.Label(terminalio.FONT, text=text, color=0xFFFF00, x=12, y=32)
+group.append(text_area)
 
 # # Create blank image for drawing.
 # # Make sure to create image with mode '1' for 1-bit color.
@@ -61,7 +64,8 @@ group.append(image)
 # font = ImageFont.truetype('PixelOperator.ttf', 16)
 # icon_font= ImageFont.truetype('lineawesome-webfont.ttf', 18)
 
-# while True:
+while True:
+    pass
 
 #     # Draw a black filled box to clear the image.
 #     draw.rectangle((0,0,width,height), outline=0, fill=0)
