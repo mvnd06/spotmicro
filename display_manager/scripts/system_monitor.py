@@ -33,12 +33,6 @@ class SystemMonitor:
         cmd = "vcgencmd measure_temp | cut -d '=' -f 2 | head --bytes -1"
         self.temperature = subprocess.check_output(cmd, shell=True).decode().strip()
 
-    def run(self):
-        while True:
-            if not self.paused:
-                self.update()
-            time.sleep(1)
-
     def pause(self):
         self.paused = True
 

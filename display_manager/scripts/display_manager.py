@@ -72,6 +72,7 @@ class DisplayManager:
         if self.system_monitor.paused:
             rospy.loginfo('publish_system_stats early return')
             return
+        self.system_monitor.update()
         stats_array = [
             self.system_monitor.ip,
             self.system_monitor.cpu, 
