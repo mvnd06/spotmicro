@@ -8,6 +8,8 @@ from std_msgs.msg import Empty
 class ButtonNode:
     def __init__(self, cooldown):
         rospy.init_node('button_node', anonymous=True)
+        rospy.loginfo(f"Running Display Manager Node...")
+        
         self.pub = rospy.Publisher('button_press', Empty, queue_size=10)
         self.cooldown = cooldown
         self.last_time = time.monotonic()
