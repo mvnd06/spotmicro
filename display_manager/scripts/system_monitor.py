@@ -35,9 +35,7 @@ class SystemMonitor:
 
         # Get temperature
         cmd = "vcgencmd measure_temp | cut -d '=' -f 2 | head --bytes -1"
-        temp_celsius = float(subprocess.check_output(cmd, shell=True).decode().strip())
-        temp_fahrenheit = temp_celsius * 1.8 + 32
-        tempString = f"{temp_fahrenheit:.2f} F"
+        tempString = subprocess.check_output(cmd, shell=True).decode().strip()
         self.temperature = f"TEMP: {tempString}"
 
     def pause(self):
