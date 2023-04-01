@@ -2,7 +2,7 @@
 
 from PIL import Image
 import rospy, time, os
-from std_msgs.msg import ColorRGBA
+from std_msgs.msg import ColorRGBA, String
 import board, busio, displayio, terminalio
 from adafruit_ssd1331 import SSD1331
 from adafruit_display_text import label
@@ -39,14 +39,15 @@ class OLEDNode():
 
         # Subscribe to `oled_color` topic.        
         # self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
+        self.text_sub = rospy.Subscriber('oled_text', String, self.text_callback)
 
         self.text_callback(["test1", "test2"])
 
         while not rospy.is_shutdown():
-            # self.home_animation()
             rospy.spin()
     
     def color_callback(self, msg):
+        self.group.clear()
         rospy.logdebug(f"Recieved -> Red: {msg.r}, Green: {msg.g}, Blue: {msg.b}")
         # Convert RGB values to a single integer.
         color_int = ((int(msg.r) << 16) | (int(msg.g) << 8) | int(msg.b))
@@ -56,19 +57,20 @@ class OLEDNode():
         
         # Redraw the background sprite with the new color.
         self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
-        self.group.pop(0)
         self.group.insert(0, self.bg_sprite)
 
     def text_callback(self, msg):
         rospy.loginfo("Received text...")
+        self.group.clear()
 
         topPadding = 5.0
         spacing = 12.0
         y = topPadding
         x = 5
-        
-        for string in msg:
-            text_area = label.Label(terminalio.FONT, text=string, color=0xFFFF00, x=x, y=y)
+
+        lines = msg.split('\n')
+        for line in lines:
+            text_area = label.Label(terminalio.FONT, text=line, color=0xFFFF00, x=x, y=y)
             y += spacing
             self.group.append(text_area)
 

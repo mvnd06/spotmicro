@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import Int32MultiArray, ColorRGBA, Empty
+from std_msgs.msg import Int32MultiArray, ColorRGBA, Empty, String
 from enum import Enum
+from system_monitor import SystemMonitor
 
 RED = ColorRGBA(r=255.0, g=0.0, b=0.0, a=1.0)
 GREEN = ColorRGBA(r=0.0, g=255.0, b=0.0, a=1.0)
@@ -13,6 +14,7 @@ BLACK = ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)
 class ScreenMode(Enum):
     ULTRASONIC = 1
     STATIC = 2
+    MONITOR = 3
 
 class DisplayManager:
     def __init__(self):
@@ -20,11 +22,20 @@ class DisplayManager:
         rospy.loginfo(f"Running Display Manager Node...")
 
         self.current_color = BLACK
-        self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
+        self.current_text = ''
+
         self.screen_mode = ScreenMode.ULTRASONIC
+        self.system_monitor = SystemMonitor()
+        self.system_monitor.run()
+        self.button_taps = 0
+
+        self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
+        self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
 
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
+
+    # Callback Methods
 
     def ultrasonic_callback(self, msg):
         if self.screen_mode != ScreenMode.ULTRASONIC:
@@ -40,23 +51,61 @@ class DisplayManager:
             self.current_color = GREEN
         self.publish_color()
 
-    def static_screen(self):
-        self.current_color = PURPLE
-        self.publish_color()
-
     def button_callback(self, msg):
-        if self.screen_mode == ScreenMode.ULTRASONIC:
-            self.screen_mode = ScreenMode.STATIC
-            self.static_screen()
-        else:
-            self.screen_mode = ScreenMode.ULTRASONIC
+        self.button_taps += 1
+        self.update_mode()
+
+    # Publish Methods
 
     def publish_color(self):
         self.color_pub.publish(self.current_color)
+
+    def publish_system_stats(self):
+        if self.system_monitor.paused:
+            return
+        stats_array = [
+            self.system_monitor.ip,
+            self.system_monitor.cpu, 
+            self.system_monitor.mem_usage, 
+            self.system_monitor.disk,
+            self.system_monitor.temperature
+        ]
+        stats_str = ''.join(stats_array)
+        if self.current_text != stats_str:
+            rospy.loginfo(f"Printing: {stats_str}")
+            self.text_pub.publish(stats_str)
+            self.current_text = stats_str
+
+    # Helper Methods
+
+    def static_screen(self):
+        self.current_color = PURPLE
+        self.publish_color()
+        
+    def run(self):
+        rate = rospy.Rate(1)
+        while not rospy.is_shutdown():
+            self.publish_system_stats()
+            rate.sleep()
+
+    def update_mode(self):
+        # Prepare for transition.
+        if self.screen_mode == ScreenMode.MONITOR:
+            self.system_monitor.pause()
+        
+        # Update mode.
+        self.screen_mode = self.button_taps % len(ScreenMode)
+
+        # Mode startup tasks.
+        if self.screen_mode == ScreenMode.STATIC:
+            self.static_screen()
+        elif self.screen_mode == ScreenMode.MONITOR:
+            self.system_monitor.resume()
         
 if __name__ == '__main__':
     try:
         display_manager = DisplayManager()
+        display_manager.run()
         rospy.spin()
     except rospy.ROSInterruptException:
         pass
