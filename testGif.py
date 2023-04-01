@@ -43,8 +43,10 @@ for i, frame in enumerate(frames):
 
     # Load the frame onto the screen
     with open(gif_path, "rb") as file:
+        print("File loaded")
         bitmap, palette = adafruit_imageload.load(file, bitmap=displayio.Bitmap, palette=displayio.Palette)
 
+    print("Creating sprite")
     sprite = displayio.TileGrid(bitmap, pixel_shader=palette)
     group = displayio.Group(max_size=1)
     group.append(sprite)
