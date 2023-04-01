@@ -68,7 +68,7 @@ class OLEDNode():
         y = topPadding
         x = 5
 
-        lines = msg.split('\n')
+        lines = msg.data.split('\n')
         for line in lines:
             text_area = label.Label(terminalio.FONT, text=line, color=0xFFFF00, x=x, y=y)
             y += spacing
