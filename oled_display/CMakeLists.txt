@@ -9,6 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package()
 
 catkin_install_python(PROGRAMS
-  scripts/test.py
+  scripts/oled_display.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
