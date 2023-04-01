@@ -24,9 +24,12 @@ spi = busio.SPI(clock=clk_pin, MOSI=mosi_pin)
 display_bus = displayio.FourWire(spi, command=dc_pin, chip_select=cs_pin, reset=reset_pin)
 display = SSD1331(display_bus, width=96, height=64)
 
-# # Clear display.
-# image = Image.new("RGB", (display.width, display.height), (0, 0, 0))
-# display.show(image)
+group = displayio.Group(max_size=10)
+display.show(group)
+
+# Clear display.
+image = Image.new("RGB", (display.width, display.height), (255, 0, 0))
+group.append(image)
 
 # # Create blank image for drawing.
 # # Make sure to create image with mode '1' for 1-bit color.
