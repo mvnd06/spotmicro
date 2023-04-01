@@ -4,13 +4,13 @@ import busio
 import digitalio
 
 from PIL import Image, ImageDraw, ImageFont
-import adafruit_ssd1306
+from adafruit_ssd1331 import SSD1331
 
 import subprocess
 
 
 # Define the Reset Pin
-oled_reset = digitalio.DigitalInOut(board.D4)
+oled_reset = digitalio.DigitalInOut(board.D25)
 
 # Display Parameters
 WIDTH = 128
@@ -20,18 +20,21 @@ BORDER = 5
 # Display Refresh
 LOOPTIME = 1.0
 
-# Use for I2C.
-i2c = board.I2C()
-oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
+# Configure display.
+mosi_pin, clk_pin, reset_pin, cs_pin, dc_pin = board.D10, board.D11, board.D25, board.D8, board.D24
+spi = busio.SPI(clock=clk_pin, MOSI=mosi_pin)
+
+display_bus = displayio.FourWire(spi, command=dc_pin, chip_select=cs_pin, reset=reset_pin)
+display = SSD1331(display_bus, width=96, height=64)
 
 # Clear display.
-oled.fill(0)
-oled.show()
+display.fill(0)
+display.show()
 
 # Create blank image for drawing.
 # Make sure to create image with mode '1' for 1-bit color.
-width = oled.width
-height = oled.height
+width = display.width
+height = display.height
 image = Image.new('1', (width, height))
 
 # Get drawing object to draw on image.
@@ -105,6 +108,6 @@ while True:
     draw.text((x+19, top+45), str(IP,'utf-8'),  font=font, fill=255)
     
    # Display image.
-    oled.image(image)
-    oled.show()
+    display.image(image)
+    display.show()
     time.sleep(LOOPTIME)
