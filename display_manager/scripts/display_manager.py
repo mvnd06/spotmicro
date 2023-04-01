@@ -26,7 +26,6 @@ class DisplayManager:
 
         self.screen_mode = ScreenMode.ULTRASONIC
         self.system_monitor = SystemMonitor()
-        self.system_monitor.run()
         self.button_taps = 0
 
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
