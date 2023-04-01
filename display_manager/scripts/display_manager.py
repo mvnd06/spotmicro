@@ -31,9 +31,10 @@ class DisplayManager:
 
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
         self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
-
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
+        
+        self.run()
 
     # Callback Methods
 
@@ -105,7 +106,6 @@ class DisplayManager:
 if __name__ == '__main__':
     try:
         display_manager = DisplayManager()
-        display_manager.run()
         rospy.spin()
     except rospy.ROSInterruptException:
         pass

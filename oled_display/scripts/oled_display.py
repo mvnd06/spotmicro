@@ -37,11 +37,9 @@ class OLEDNode():
         self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
         self.group.append(self.bg_sprite)
 
-        # Subscribe to `oled_color` topic.        
-        # self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
+        # Subscribe to `oled_display` topics.        
+        self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
         self.text_sub = rospy.Subscriber('oled_text', String, self.text_callback)
-
-        self.text_callback(["test1", "test2"])
 
         while not rospy.is_shutdown():
             rospy.spin()
