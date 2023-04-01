@@ -53,6 +53,7 @@ class DisplayManager:
         self.publish_color()
 
     def button_callback(self, msg):
+        rospy.loginfo(self.button_taps)
         self.button_taps += 1
         self.update_mode()
 
