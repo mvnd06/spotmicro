@@ -12,9 +12,9 @@ PURPLE = ColorRGBA(r=128.0, g=0.0, b=128.0, a=1.0)
 BLACK = ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)
 
 class ScreenMode(Enum):
+    MONITOR = 0
     ULTRASONIC = 1
     STATIC = 2
-    MONITOR = 3
 
 class DisplayManager:
     def __init__(self):
@@ -89,9 +89,7 @@ class DisplayManager:
             self.system_monitor.pause()
         
         # Update mode.
-        modes =  list(ScreenMode)
-        index = self.button_taps % len(ScreenMode)
-        self.screen_mode = modes[index]
+        self.screen_mode = self.button_taps % len(ScreenMode)
 
         # Mode startup tasks.
         if self.screen_mode == ScreenMode.STATIC:
