@@ -65,29 +65,28 @@ group.append(text_area)
 # font = ImageFont.truetype('PixelOperator.ttf', 16)
 # icon_font= ImageFont.truetype('lineawesome-webfont.ttf', 18)
 
-while True:
-    pass
+# while True:
+    # Draw a black filled box to clear the image.
+    # draw.rectangle((0,0,width,height), outline=0, fill=0)
 
-#     # Draw a black filled box to clear the image.
-#     draw.rectangle((0,0,width,height), outline=0, fill=0)
+    # Shell scripts for system monitoring from here
+    # https://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
+cmd = "hostname -I | cut -d\' \' -f1 | head --bytes -1"
+IP = subprocess.check_output(cmd, shell = True )
 
-#     # Shell scripts for system monitoring from here
-#     # https://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
-#     cmd = "hostname -I | cut -d\' \' -f1 | head --bytes -1"
-#     IP = subprocess.check_output(cmd, shell = True )
+cmd = "top -bn1 | grep load | awk '{printf \"%.2fLA\", $(NF-2)}'"
+CPU = subprocess.check_output(cmd, shell = True )
 
-#     cmd = "top -bn1 | grep load | awk '{printf \"%.2fLA\", $(NF-2)}'"
-#     CPU = subprocess.check_output(cmd, shell = True )
+cmd = "free -m | awk 'NR==2{printf \"%.2f%%\", $3*100/$2 }'"    
+MemUsage = subprocess.check_output(cmd, shell = True )
 
-#     cmd = "free -m | awk 'NR==2{printf \"%.2f%%\", $3*100/$2 }'"    
-#     MemUsage = subprocess.check_output(cmd, shell = True )
-    
-#     cmd = "df -h | awk '$NF==\"/\"{printf \"HDD: %d/%dGB %s\", $3,$2,$5}'"
-#     cmd = "df -h | awk '$NF==\"/\"{printf \"%d/%dGB\", $3,$2}'"
-#     Disk = subprocess.check_output(cmd, shell = True )
-    
-#     cmd = "vcgencmd measure_temp | cut -d '=' -f 2 | head --bytes -1"
-#     Temperature = subprocess.check_output(cmd, shell = True )
+cmd = "df -h | awk '$NF==\"/\"{printf \"HDD: %d/%dGB %s\", $3,$2,$5}'"
+cmd = "df -h | awk '$NF==\"/\"{printf \"%d/%dGB\", $3,$2}'"
+Disk = subprocess.check_output(cmd, shell = True )
+
+cmd = "vcgencmd measure_temp | cut -d '=' -f 2 | head --bytes -1"
+Temperature = subprocess.check_output(cmd, shell = True )
+print(IP, CPU, MemUsage, Disk, Temperature)
 
 #    # Icons
 #     # Icon temperature

@@ -11,7 +11,7 @@ from adafruit_display_text import label
 displayio.release_displays()
 
 board_type = os.uname().machine
-print(f"Board: {board_type}")
+print("Running test display script..")
 
 mosi_pin, clk_pin, reset_pin, cs_pin, dc_pin = board.D10, board.D11, board.D25, board.D8, board.D24
 
