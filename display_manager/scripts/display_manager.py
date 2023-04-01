@@ -33,7 +33,7 @@ class DisplayManager:
         self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
-        
+
         self.run()
 
     # Callback Methods
@@ -71,7 +71,7 @@ class DisplayManager:
             self.system_monitor.disk,
             self.system_monitor.temperature
         ]
-        stats_str = ''.join(stats_array)
+        stats_str = '|'.join(stats_array)
         if self.current_text != stats_str:
             rospy.loginfo(f"Printing: {stats_str}")
             self.text_pub.publish(stats_str)
