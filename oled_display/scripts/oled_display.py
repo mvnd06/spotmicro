@@ -59,7 +59,6 @@ class OLEDNode():
         self.group.insert(0, self.bg_sprite)
 
     def text_callback(self, msg):
-        rospy.loginfo("Received text...")
         while len(self.group):
             self.group.pop()
 
@@ -69,7 +68,7 @@ class OLEDNode():
         x = 3
 
         lines = msg.data.split('|')
-        rospy.loginfo(lines)
+        rospy.logdebug(f"Received text: {lines}")
         for line in lines:
             text_area = label.Label(terminalio.FONT, text=line, color=0xFFFF00, x=x, y=y)
             y += spacing
