@@ -9,7 +9,7 @@ class ButtonNode:
     def __init__(self, cooldown):
         rospy.init_node('button_node', anonymous=True)
         rospy.loginfo(f"Running Display Manager Node...")
-        
+
         self.pub = rospy.Publisher('button_press', Empty, queue_size=10)
         self.cooldown = cooldown
         self.last_time = time.monotonic()
@@ -22,7 +22,7 @@ class ButtonNode:
     def button_callback(self, channel):
         current_time = time.monotonic()
         if current_time - self.last_time >= self.cooldown:
-            rospy.loginfo('Button was pushed')
+            rospy.logdebug('Button was pushed')
             self.pub.publish()
             self.last_time = current_time
 

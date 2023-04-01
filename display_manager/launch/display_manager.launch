@@ -1,0 +1,10 @@
+<launch>
+  <!-- Launch button_monitor node -->
+  <node name="button_monitor" pkg="button_monitor" type="button_monitor.py" output="screen"/>
+
+  <!-- Launch ultrasonic_monitor node -->
+  <node name="ultrasonic_monitor" pkg="ultrasonic_monitor" type="ultrasonic_monitor.py" output="screen"/>
+
+  <!-- Launch display_manager node -->
+  <node name="display_manager" pkg="display_manager" type="display_manager.py" output="screen"/>
+</launch>
