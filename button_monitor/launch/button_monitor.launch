@@ -1,0 +1,6 @@
+<launch>
+  <node name="button_press" pkg="button_monitor" type="button_monitor.py" output="screen">
+    <param name="button_pin" value="22"/>
+    <param name="cooldown_period" value="0.3"/>
+  </node>
+</launch>
