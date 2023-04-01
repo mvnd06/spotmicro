@@ -29,7 +29,7 @@ group = displayio.Group()
 display.show(group)
 
 # Define font and size
-font = ImageFont.truetype("arial.ttf", 10)
+font = terminalio.FONT
 
 # Define text for 5 lines
 line1 = "Line 1"
