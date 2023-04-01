@@ -39,11 +39,13 @@ line4 = "Line 4"
 line5 = "Line 5"
 
 # Define y positions for 5 lines
-y1 = 0
-y2 = 12
-y3 = 24
-y4 = 36
-y5 = 48
+topPadding = 5
+spacing = 12
+y1 = topPadding
+y2 = y1 + spacing
+y3 = y2 + spacing
+y4 = y3 + spacing
+y5 = y4 + spacing
 
 # Create 5 text areas with different y positions
 text_area1 = label.Label(font, text=line1, color=0xFFFF00, x=0, y=y1)

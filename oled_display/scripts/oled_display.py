@@ -5,7 +5,7 @@ import rospy, time, os
 from std_msgs.msg import ColorRGBA
 import board, busio, displayio
 from adafruit_ssd1331 import SSD1331
-from adafruit_imageload import load as imageload
+from adafruit_display_text import label
 import pkg_resources
 
 HOME_ANIMATION_FILE = pkg_resources.resource_filename('oled_display', 'resources/home_animation.bmp')
@@ -18,16 +18,6 @@ class OLEDNode():
         rospy.loginfo(f"Running OLED Display Node...")
 
         displayio.release_displays()
-
-        # Load and display all PNG files in folder
-        # folder_path = '/home/ubuntu/catkin_ws/src/oled_display/scripts/resources/home_animation/'
-        # png_files = [f for f in os.listdir(folder_path) if f.endswith('.png')]
-        # images = []
-        # for png_file in png_files:
-        #     with open(os.path.join(folder_path, png_file), "rb") as f:
-        #         print(type(f))
-        #         images.append(imageload(f))
-        # self.images = images
         
         # Configure display.
         mosi_pin, clk_pin, reset_pin, cs_pin, dc_pin = board.D10, board.D11, board.D25, board.D8, board.D24
@@ -37,18 +27,20 @@ class OLEDNode():
         self.display = SSD1331(display_bus, width=96, height=64)
         
         # Create the display context.
-        self.splash = displayio.Group()
-        self.display.show(self.splash)
+        self.group = displayio.Group()
+        self.display.show(self.group)
         self.color_palette = displayio.Palette(1)
         self.color_bitmap = displayio.Bitmap(96, 64, 1)
         self.color_palette[0] = 0x000000
 
         # Update display.
         self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
-        self.splash.append(self.bg_sprite)
+        self.group.append(self.bg_sprite)
 
         # Subscribe to `oled_color` topic.        
         self.color_sub = rospy.Subscriber('oled_color', ColorRGBA, self.color_callback)
+
+        self.text_callback(["test1", "test2"])
 
         while not rospy.is_shutdown():
             # self.home_animation()
@@ -64,23 +56,21 @@ class OLEDNode():
         
         # Redraw the background sprite with the new color.
         self.bg_sprite = displayio.TileGrid(self.color_bitmap, pixel_shader=self.color_palette, x=0, y=0)
-        self.splash.pop(0)
-        self.splash.insert(0, self.bg_sprite)
+        self.group.pop(0)
+        self.group.insert(0, self.bg_sprite)
 
-    # def home_animation(self):
-    #     rospy.loginfo("Starting animation...")
+    def text_callback(self, msg):
+        rospy.loginfo("Received text...")
 
-    #     rospy.loginfo(self.images)
-    #     for image in self.images:
-    #         bmp, palette = image
-                    
-    #         sprite = displayio.TileGrid(bmp, pixel_shader=palette, x=0, y=0)
-                    
-    #         self.splash.pop(0)
-    #         self.splash.append(sprite)
-            
-    #         display.refresh()
-    #         time.sleep(0.1)  # Change this delay to adjust the animation speed
+        topPadding = 5.0
+        spacing = 12.0
+        y = topPadding
+        x = 5
+        
+        for string in msg:
+            text_area = label.Label(terminalio.FONT, text=string, color=0xFFFF00, x=x, y=y)
+            y += spacing
+            self.group.append(text_area)
 
 if __name__ == '__main__':
     node = OLEDNode() 
