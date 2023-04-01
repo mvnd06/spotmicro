@@ -33,14 +33,13 @@ class DisplayManager:
         rospy.Subscriber('ultrasonic_data', Int32MultiArray, self.ultrasonic_callback)
         rospy.Subscriber('button_press', Empty, self.button_callback)
 
-#        rospy.Timer(rospy.Duration(1), self.publish_system_stats)
+        rospy.Timer(rospy.Duration(1), self.publish_system_stats)
         rospy.loginfo("End of init")
 
 
     # Callback Methods
 
     def ultrasonic_callback(self, msg):
-        rospy.loginfo('ultrasonic_callback')
         if self.screen_mode != ScreenMode.ULTRASONIC:
             return
         # Parse the incoming message to extract the left and right distance values
@@ -55,7 +54,6 @@ class DisplayManager:
         self.publish_color()
 
     def button_callback(self, msg):
-        rospy.loginfo('button_callback')
         rospy.loginfo(self.button_taps)
         self.button_taps += 1
         self.update_mode()
@@ -63,13 +61,10 @@ class DisplayManager:
     # Publish Methods
 
     def publish_color(self):
-        rospy.loginfo('publish_color')
         self.color_pub.publish(self.current_color)
 
     def publish_system_stats(self):
-        rospy.loginfo('publish_system_stats')
         if self.system_monitor.paused:
-            rospy.loginfo('publish_system_stats early return')
             return
         self.system_monitor.update()
         stats_array = [
@@ -88,18 +83,18 @@ class DisplayManager:
     # Helper Methods
 
     def static_screen(self):
-        rospy.loginfo('static_screen')
         self.current_color = PURPLE
         self.publish_color()
         
     def update_mode(self):
-        rospy.loginfo('update_mode')
         # Prepare for transition.
         if self.screen_mode == ScreenMode.MONITOR:
             self.system_monitor.pause()
         
         # Update mode.
-        self.screen_mode = self.button_taps % len(ScreenMode)
+        modes =  list(ScreenMode)
+        index = self.button_taps % len(ScreenMode)
+        self.screen_mode = modes[index]
 
         # Mode startup tasks.
         if self.screen_mode == ScreenMode.STATIC:
