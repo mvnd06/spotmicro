@@ -134,7 +134,7 @@ class SpotMicroServoControl():
 
         # Default servo center values
         default_centers = [404, 269, 276, 405, 233, 316, 196, 381, 295, 196, 381, 346]
-        default_directions = [1, -1, -1, 1, 1, 1, -1, 1, 1, -1, 1, -1]
+        default_directions = [-1, -1, -1, 1, 1, 1, -1, 1, 1, -1, 1, -1]
 
         # Create a servo dictionary with 12 ServoConvert objects
         # keys: integers 0 through 12
