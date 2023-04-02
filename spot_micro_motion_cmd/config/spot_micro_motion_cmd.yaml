@@ -101,7 +101,7 @@ dt: 0.02 # Loop time of main loop, seconds (0.02 s is 50 hz)
 publish_odom: true  # Determines whether odometry is published or not
 
 # Debug mode
-debug_mode: false # Prints out additional information
+debug_mode: true # Prints out additional information
 plot_mode: false # Publishes data for the python plotting node to work
 
 # Standalone mode
