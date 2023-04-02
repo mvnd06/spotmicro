@@ -4,7 +4,10 @@ project(display_manager)
 find_package(catkin REQUIRED COMPONENTS
  rospy
  std_msgs
+ system_monitor
 )
+
+catkin_python_setup()
 
 catkin_package()
 
