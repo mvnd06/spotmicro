@@ -3,7 +3,7 @@
 import rospy
 from std_msgs.msg import Int32MultiArray, ColorRGBA, Empty, String
 from enum import Enum
-from system_monitor import SystemMonitor
+import system_monitor
 
 RED = ColorRGBA(r=255.0, g=0.0, b=0.0, a=1.0)
 GREEN = ColorRGBA(r=0.0, g=255.0, b=0.0, a=1.0)
@@ -27,7 +27,7 @@ class DisplayManager:
         self.screen_mode = ScreenMode.MONITOR
         self.button_taps = 0
 
-        self.system_monitor = SystemMonitor()
+        self.system_monitor = system_monitor.SystemMonitor()
 
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
         self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
