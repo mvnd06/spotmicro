@@ -10,6 +10,7 @@ catkin_package()
 
 catkin_install_python(PROGRAMS
   scripts/display_manager.py
+  scripts/system_monitor.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
