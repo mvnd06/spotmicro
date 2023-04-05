@@ -70,7 +70,7 @@ class DisplayManager:
         self.screen_mode = ScreenMode.MONITOR
         self.button_taps = 0
 
-        self.system_monitor = system_monitor.SystemMonitor()
+        self.system_monitor = SystemMonitor()
 
         self.color_pub = rospy.Publisher('oled_color', ColorRGBA, queue_size=10)
         self.text_pub = rospy.Publisher('oled_text', String, queue_size=10)
