@@ -16,6 +16,7 @@ def get_service_status(service_name):
 def main():
     # Initialize ROS node
     rospy.init_node('system_status')
+    rospy.loginfo(f"Running System Status Node...")
 
     # Create publishers
     motion_pub = rospy.Publisher('/motion_status', Int32, queue_size=10)
@@ -29,6 +30,8 @@ def main():
         motion_status = get_service_status('motion')
         display_status = get_service_status('display')
         gui_status = get_service_status('gui')
+
+        rospy.logdebug(f"Motion: {motion_status}, Display: {display_status}, GUI: {gui_status}")
 
         # Publish status messages
         motion_pub.publish(motion_status)
