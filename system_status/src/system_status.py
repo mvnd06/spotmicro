@@ -31,7 +31,7 @@ def main():
         display_status = get_service_status('display')
         gui_status = get_service_status('gui')
 
-        rospy.logdebug(f"Motion: {motion_status}, Display: {display_status}, GUI: {gui_status}")
+        rospy.loginfo(f"Motion: {motion_status}, Display: {display_status}, GUI: {gui_status}")
 
         # Publish status messages
         motion_pub.publish(motion_status)
