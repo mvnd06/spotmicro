@@ -1,0 +1,3 @@
+<launch>
+  <node name="system_status" pkg="system_status" type="system_status.py" output="screen"/>
+</launch>
