@@ -31,8 +31,6 @@ def main():
         display_status = get_service_status('display')
         rosbridge_status = get_service_status('rosbridge')
 
-        rospy.loginfo(f"Motion: {motion_status}, Display: {display_status}, Bridge: {rosbridge_status}")
-
         # Publish status messages
         motion_pub.publish(motion_status)
         display_pub.publish(display_status)
