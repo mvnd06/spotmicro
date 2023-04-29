@@ -6,6 +6,7 @@
 
 
 Video of robot: https://www.youtube.com/watch?v=S-uzWG9Z-5E
+ROS Noetic Download Instructions: https://www.youtube.com/watch?v=603vghYJ0ys
 
 * [Overview](#Overview)
 * [General Instructions](#general-instructions)
