@@ -11,7 +11,7 @@ class UltrasonicMonitor:
         rospy.loginfo(f"Running Ultrasonic Monitor Node...")
 
         # Open serial port.
-        port = rospy.get_param('~port', '/dev/ttyAMA0')
+        port = rospy.get_param('~port', '/dev/ttyUSB0')
         baud_rate = rospy.get_param('~baud_rate', 9600)
         self.serial = Serial(port=port, baudrate=baud_rate)
 
