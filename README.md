@@ -19,7 +19,7 @@ ROS Noetic Download Instructions: https://www.youtube.com/watch?v=603vghYJ0ys
 * [External Links](#external-links)
 
 ## Overview
-This project is the source code for a Spot Micro quadruped, a 4 legged open source robot. This code implements motion control of a 3d printed spot micro robot, including sit, stand, angle and walk control. Supporting libraries provide additional capabilities, such as mapping through SLAM and a body mounted lidar. The software is implemented on a Raspberry Pi 3B running Ubuntu 16.04 with ROS Kinetic installed.
+This project is the source code for a Spot Micro quadruped, a 4 legged open source robot. This code implements motion control of a 3d printed spot micro robot, including sit, stand, angle and walk control. Supporting libraries provide additional capabilities, such as mapping through SLAM and a body mounted lidar. The software is implemented on a Banana Pi Zero M2 running Ubuntu 20.04 with ROS Noetic installed.
 
 The software is composed of C++ and Python nodes in a ROS framework.
 
@@ -27,12 +27,12 @@ The software is composed of C++ and Python nodes in a ROS framework.
 The frame utilized is the Thingverse Spot Micro frame developed by KDY0523. See [the thingverse page](https://www.thingiverse.com/thing:3445283) for additional details for assembly hardware. The files for cls6336hv servos were printed which also fit the hv5523mg servos I used.
 
 Component List:
-* Computer: Raspberry Pi 3B 
+* Computer: Banana Pi Zero M2 
 * Servo control board: PCA9685, controlled via i2c
 * Servos: 12 x PDI-HV5523MG
 * LCD Panel: 16x2 i2c LCD panel (Optional)
 * Battery: 2s 4000 mAh Lipo, direct connection to servo board for servo power
-* UBEC: HKU5 5V/5A ubec, used as 5v voltage regulator to power raspberry pi, lcd panel, pca9685 control board.
+* UBEC: HKU5 5V/5A ubec, used as 5v voltage regulator to power banana pi, lcd panel, pca9685 control board.
 * Lidar: RPLidar A1
 * Custom 3d printed parts for mounts and reinforcements
 
@@ -40,15 +40,15 @@ More information about the hardware, including the additional custom 3d printed 
 
 
 #### Software:
-This repo is structured as a catkin workspace in a ROS Kinetic envivornment on Ubuntu 16.04. The software may not work or compile outside this environment. Raspberry Pi images preloaded with Ubuntu 16.04 and a ROS Kinetic installation can be found via ubiquity robotics. [See ubiquity robotics webpage](https://downloads.ubiquityrobotics.com/) for download, setup, and wifi setup instructions. It is suggested to also install ROS Kinetic on a Ubuntu 16.04 linux installation/dual boot/virtual machine on a PC for development and for running control nodes. Instructions to install ROS kinetic can be found [here](http://wiki.ros.org/kinetic/Installation/Ubuntu).
+This repo is structured as a catkin workspace in a ROS noetic envivornment on Ubuntu 20.04. The software may not work or compile outside this environment. 
 
-**NOTE**  A SWAP partition of about 1 GB on the RPI's sd card is necessary to increase the virtual memory available beyond the RPI's onboard RAM. In my experience the catkin compilation process uses all the onboard RAM and stalls indefinitely and does not complete without adding a SWAP partition. Example instructions for adding a SWAP partition [can be found here](https://nebl.io/neblio-university/enabling-increasing-raspberry-pi-swap/). 
+**NOTE**  A SWAP partition of about 1 GB on the BPI's sd card is necessary to increase the virtual memory available beyond the RPI's onboard RAM. In my experience the catkin compilation process uses all the onboard RAM and stalls indefinitely and does not complete without adding a SWAP partition. Example instructions for adding a SWAP partition [can be found here](https://nebl.io/neblio-university/enabling-increasing-banana-pi-swap/). 
 
-The provided ROS Catkin make build system can be utilized, but I used `catkin tools` instead ([see catkin tools website]((https://catkin-tools.readthedocs.io/en/latest/))). Compilation commands below will be given assuming `catkin tools`. If not using catkin tools on the raspberry pi, the stock `catkin_make` can be used to compile the code via command such as `catkin_make -DCMAKE_BUILD_TYPE=Release` from the home of the catkin workspace.
+The provided ROS Catkin make build system can be utilized, but I used `catkin tools` instead ([see catkin tools website]((https://catkin-tools.readthedocs.io/en/latest/))). Compilation commands below will be given assuming `catkin tools`. If not using catkin tools on the banana pi, the stock `catkin_make` can be used to compile the code via command such as `catkin_make -DCMAKE_BUILD_TYPE=Release` from the home of the catkin workspace.
 
 ##### Software Checkout and Setup:
 
-This repo should be checked out to a catkin workspace on the raspberry pi so the directory structure appears as below. If not already available, a catkin workspace can be created or transitioned from a catkin make workspace using catkin tools ([or if using stock ROS tools, see tutorial pages for creating a catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace)). If you don't have the pi connected to the internet you could use the catkin commands to create the workspace on another conputer, then copy the files to a RPi over wifi via scp. For example: `scp spotMicro/* ubuntu@10.42.0.1:~/catkin_ws/src/`.
+This repo should be checked out to a catkin workspace on the banana pi so the directory structure appears as below. If not already available, a catkin workspace can be created or transitioned from a catkin make workspace using catkin tools ([or if using stock ROS tools, see tutorial pages for creating a catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace)). If you don't have the pi connected to the internet you could use the catkin commands to create the workspace on another conputer, then copy the files to a RPi over wifi via scp. For example: `scp spotMicro/* ubuntu@10.42.0.1:~/catkin_ws/src/`.
 
 ```
 catkin_ws/
@@ -72,9 +72,9 @@ If any git permission errors are encountered, try the following suggestions via 
 
 Three additional ROS packages may need to be installed for this project to build succesfully. They can be installed via:
 ```
-sudo apt-get install ros-kinetic-joy
-sudo apt-get install ros-kinetic-rplidar-ros
-sudo apt-get install ros-kinetic-hector-slam
+sudo apt-get install ros-noetic-joy
+sudo apt-get install ros-noetic-rplidar-ros
+sudo apt-get install ros-noetic-hector-slam
 ```
 
 Since the same repo is checked out on both a pi and a laptop/PC, you will need to install an i2c library on the laptop/pc for the software to compile correctly. The `i2cpwm_board` node is not run on the laptop/pc, but compilation will look for dependencies for this node. Install the necessary library via:
@@ -107,8 +107,8 @@ This section attemps to be a full set of instructions to get a spot micro robot 
 Comprehensive instructions for servo installation, calibration, and configuration can be found in [servo_calibration](docs/servo_calibration.md) document.
 
 #### Running:
-Open at least two terminal windows, with at least one ssh'ed to the raspberry pi. I reccomend using a terminal multiplexer such as `tmux` for convenience. Start the following launch files in the respective terminals:
-* `roslaunch spot_micro_motion_cmd motion_cmd.launch`: Run on the Raspberry Pi. Launches the i2c_pwmboard node as well as the robot's motion control node. On startup, the motion command node sends a servo configuration message to the i2c_pwmboard node, then starts a state machines and enteres an idle state.
+Open at least two terminal windows, with at least one ssh'ed to the banana pi. I reccomend using a terminal multiplexer such as `tmux` for convenience. Start the following launch files in the respective terminals:
+* `roslaunch spot_micro_motion_cmd motion_cmd.launch`: Run on the banana Pi. Launches the i2c_pwmboard node as well as the robot's motion control node. On startup, the motion command node sends a servo configuration message to the i2c_pwmboard node, then starts a state machines and enteres an idle state.
 * `roslaunch spot_micro_keyboard_command keyboard_command.launch` Run on a local machine. Launches the keyboard command node, for issuing keyboard commands to the spot micro robot
 * **OPTIONAL**: The above two launch files can take optional command line arguments to start additional nodes. Some of the command line arguments are listed below.
     * Command line arguments for `motion_cmd.launch`:
