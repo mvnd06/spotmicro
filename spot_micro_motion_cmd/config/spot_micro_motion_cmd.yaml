@@ -23,15 +23,15 @@ servo_max_angle_deg: 82.5
 RF_3: {num: 1,  center: 404,range: 238.3,direction:  1, center_angle_deg:  79.62}
 RF_2: {num: 2,  center: 264,range: 238.3,direction: -1, center_angle_deg: -41.54}
 RF_1: {num: 3,  center: 326,range: 183.3,direction: -1, center_angle_deg:  0.00}
-RB_3: {num: 4,  center: 405,range: 238.3,direction:  1, center_angle_deg:  76.85}
-RB_2: {num: 5,  center: 233,range: 220,direction:    1, center_angle_deg: -45.00}
-RB_1: {num: 6,  center: 316,range: 183.3,direction:  1, center_angle_deg:  -45.00}
-LB_3: {num: 7,  center: 196,range: 238.3,direction: -1, center_angle_deg: -8.31}
-LB_2: {num: 8,  center: 381,range: 231,direction:    1, center_angle_deg:  45.00}
-LB_1: {num: 9,  center: 295,range: 179.7,direction:  1, center_angle_deg:  0.00}
-LF_3: {num: 10, center: 196,range: 238.3,direction: -1, center_angle_deg: -8.31}
-LF_2: {num: 11, center: 381,range: 240.2,direction:  1, center_angle_deg:  44.66}
-LF_1: {num: 12, center: 346,range: 146.7,direction: -1, center_angle_deg:  -45.00}
+RB_3: {num: 5,  center: 405,range: 238.3,direction:  1, center_angle_deg:  76.85}
+RB_2: {num: 6,  center: 233,range: 220,direction:    1, center_angle_deg: -45.00}
+RB_1: {num: 7,  center: 316,range: 183.3,direction:  1, center_angle_deg:  -45.00}
+LB_3: {num: 9,  center: 196,range: 238.3,direction: -1, center_angle_deg: -8.31}
+LB_2: {num: 10,  center: 381,range: 231,direction:    1, center_angle_deg:  45.00}
+LB_1: {num: 11,  center: 295,range: 179.7,direction:  1, center_angle_deg:  0.00}
+LF_3: {num: 13, center: 196,range: 238.3,direction: -1, center_angle_deg: -8.31}
+LF_2: {num: 14, center: 381,range: 240.2,direction:  1, center_angle_deg:  44.66}
+LF_1: {num: 15, center: 346,range: 146.7,direction: -1, center_angle_deg:  -45.00}
 
 # Control Parameters
 transit_tau: 0.3 # Time constant in seconds for first order filters during transition state

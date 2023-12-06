@@ -1,0 +1,58 @@
+
+Scratch Pad
+
+-----------------------------
+
+Servo 1 - Right Front Low
+    Min: 225
+    Max: 505
+
+Servo 2 - Right Front Mid
+    Min: 179
+    Max: 469
+
+Servo 3 - Right Front Top
+    Min: 296
+    Max: 376
+
+------------------------------
+
+Servo 4 - Right Back Low
+    Max: 475
+    Min: 185
+
+Servo 5 - Right Back Mid
+    Min: 173
+    Max: 443
+
+Servo 6 - Right Back Top
+    Min: 326
+    Max: 226
+
+------------------------------
+
+Servo 7 - Left Back Low
+    Min: 96
+    Min: 406
+
+Servo 8 - Left Back Mid
+    Min: 191
+    Max: 461
+
+Servo 9 - Left Back Top
+    Min: 326
+    Max: 226
+
+------------------------------
+
+Servo 10 - Left Front Low
+    Min: 96
+    Min: 406
+
+Servo 11 - Left Front Mid
+    Min: 191
+    Max: 461
+
+Servo 12 - Left Front Top
+    Min: 266
+    Max: 376
