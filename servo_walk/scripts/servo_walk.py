@@ -26,55 +26,7 @@ default_extremes = [
     (266, 356),
 ]
 
-msg = """
-Servo Control Module for 12 Servos.
-
-Enter one of the following options:
------------------------------
-quit: stop and quit the program
-oneServo: Move one servo manually, all others will be commanded to their center position
-allServos: Move all servo's manually together
-
-Keyboard commands for One Servo Control 
----------------------------
-   q                y    
-            f   g       j   k
-    z   x       b   n   m
-
-  q: Quit current command mode and go back to Option Select
-  z: Command servo min value
-  y: Command servo center value
-  x: Command servo max value
-  f: Manually decrease servo command value by 10
-  g: Manually decrease servo command value by 1
-  j: Manually increase servo command value by 1
-  k: Manually increase servo command value by 10
-  b: Save new min command value
-  n: Save new center command value
-  m: Save new max command value
-
-
-  anything else : Prompt again for command
-
-
-CTRL-C to quit
-"""
-# Dictionary with anonomous helper functions to execute key commands
-keyDict = {
-    "q": None,
-    "z": lambda x: x.set_value(x._min),
-    "y": lambda x: x.set_value(x._center),
-    "x": lambda x: x.set_value(x._max),
-    "f": lambda x: x.set_value(x.value - 10),
-    "g": lambda x: x.set_value(x.value - 1),
-    "j": lambda x: x.set_value(x.value + 1),
-    "k": lambda x: x.set_value(x.value + 10),
-    "b": lambda x: x.set_min(x.value),
-    "n": lambda x: x.set_center(x.value),
-    "m": lambda x: x.set_max(x.value),
-}
-
-validCmds = ["quit", "oneServo", "allServos", "customPositions"]
+validCmds = ["quit", "walk"]
 
 
 class ServoConvert:
@@ -140,13 +92,12 @@ class ServoConvert:
             self._min = min_val
             print("Servo %2i min set to %4i" % (self.id + 1, min_val))
 
-
 class SpotMicroServoControl:
     def __init__(self):
-        rospy.loginfo("Setting Up the Spot Micro Servo Control Node...")
+        rospy.loginfo("Setting Up the Servo Walk Node...")
 
         # Set up and title the ros node for this code
-        rospy.init_node("spot_micro_servo_control")
+        rospy.init_node("servo_walk")
 
         # Intialize empty servo dictionary
         self.servos = {}
@@ -236,7 +187,6 @@ class SpotMicroServoControl:
         # and ability to control all servos together
 
         while not rospy.is_shutdown():
-            print(msg)
             userInput = input("Command?: ")
 
             if userInput not in validCmds:
@@ -244,95 +194,10 @@ class SpotMicroServoControl:
             else:
                 if userInput == "quit":
                     print("Ending program...")
-                    print("Final Servo Values")
-                    print("--------------------")
-                    for i in range(numServos):
-                        print(
-                            "Servo %2i:   Min: %4i,   Center: %4i,   Max: %4i"
-                            % (
-                                i,
-                                self.servos[i]._min,
-                                self.servos[i]._center,
-                                self.servos[i]._max,
-                            )
-                        )
-                    break
-                
-
+            
                 elif userInput == 'customPositions':
                     positions_str = input("Enter servo positions as a comma-separated list: ")
-                    try:
-                        positions = [float(pos.strip()) for pos in positions_str.split(',')]
-                        self.set_servo_positions(positions)
-                    except ValueError:
-                        print("Invalid input. Please enter numeric values separated by commas.")
-
-                elif userInput == "oneServo":
-                    # Reset all servos to center value, and send command
-                    self.reset_all_servos_off()
-                    self.send_servo_msg()
-
-                    # First get servo number to command
-                    nSrv = -1
-                    while 1:
-                        userInput = int(
-                            input(
-                                "Which servo to control? Enter a number 1 through 12: "
-                            )
-                        )
-
-                        if userInput not in range(1, numServos + 1):
-                            print("Invalid servo number entered, try again")
-                        else:
-                            nSrv = userInput - 1
-                            break
-
-                    # Loop and act on user command
-                    print("Enter command, q to go back to option select: ")
-                    while 1:
-                        userInput = self.getKey()
-
-                        if userInput == "q":
-                            break
-                        elif userInput not in keyDict:
-                            print("Key not in valid key commands, try again")
-                        else:
-                            keyDict[userInput](self.servos[nSrv])
-                            print(
-                                "Servo %2i cmd: %4i" % (nSrv, self.servos[nSrv].value)
-                            )
-                            self.send_servo_msg()
-
-                elif userInput == "center":
-                    # Reset all servos to center value, and send command
-                    self.reset_all_servos_center()
-                    self.send_servo_msg()
-                elif userInput == "allServos":
-                    # Reset all servos to center value, and send command
-                    self.reset_all_servos_center()
-                    self.send_servo_msg()
-
-                    print("Enter command, q to go back to option select: ")
-                    while 1:
-                        userInput = self.getKey()
-
-                        if userInput == "q":
-                            break
-                        elif userInput not in keyDict:
-                            print("Key not in valid key commands, try again")
-                        elif userInput in ("b", "n", "m"):
-                            print(
-                                "Saving values not supported in all servo control mode"
-                            )
-                        else:
-                            for s in self.servos.values():
-                                keyDict[userInput](s)
-                            print("All Servos Commanded")
-                            self.send_servo_msg()
-
-            # print self._last_time_cmd_rcv, self.is_controller_connected
-            # if not self.is_controller_connected:
-            #     self.set_actuators_idle()
+                    self.set_servo_positions(positions)
 
             # Set the control rate in Hz
             rate = rospy.Rate(10)

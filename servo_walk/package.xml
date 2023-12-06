@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>spot_micro_inv_kinematics</name>
+  <name>servo_walk</name>
   <version>0.0.0</version>
-  <description>The spot_micro_inv_kinematics package</description>
+  <description>The servo_walk package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
