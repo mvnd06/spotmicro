@@ -5,6 +5,7 @@ Class for testing control of 12 servos. It assumes ros-12cpwmboard has been
 installed
 """
 import rospy
+from ServoInvKinematics import ServoInvKinematicsEngine
 import sys, select, termios, tty  # For terminal keyboard key press reading
 from i2cpwm_board.msg import Servo, ServoArray
 
@@ -182,27 +183,15 @@ class SpotMicroServoControl:
         self.reset_all_servos_center()
         self.send_servo_msg()
 
-        # Prompt user with keyboard command information
-        # Ability to control individual servo to find limits and center values
-        # and ability to control all servos together
-
+        # Begin generating walk commands from inv. kinematics node
+        engine = ServoInvKinematicsEngine()
         while not rospy.is_shutdown():
-            userInput = input("Command?: ")
-
-            if userInput not in validCmds:
-                print("Valid command not entered, try again...")
-            else:
-                if userInput == "quit":
-                    print("Ending program...")
-            
-                elif userInput == 'customPositions':
-                    positions_str = input("Enter servo positions as a comma-separated list: ")
-                    self.set_servo_positions(positions)
-
+            positions = engine.generate_next_step()
+            if positions is not None:
+                self.set_servo_positions(positions)
             # Set the control rate in Hz
-            rate = rospy.Rate(10)
+            rate = rospy.Rate(50)
             rate.sleep()
-
 
 if __name__ == "__main__":
     smsc = SpotMicroServoControl()
