@@ -5,7 +5,7 @@ Class for testing control of 12 servos. It assumes ros-12cpwmboard has been
 installed
 """
 import rospy
-from ServoInvKinematics import ServoInvKinematicsEngine
+from servo_inv_kinematics_engine import ServoInvKinematicsEngine
 import sys, select, termios, tty  # For terminal keyboard key press reading
 from i2cpwm_board.msg import Servo, ServoArray
 
@@ -26,8 +26,6 @@ default_extremes = [
     (191, 461),
     (266, 356),
 ]
-
-validCmds = ["quit", "walk"]
 
 
 class ServoConvert:
