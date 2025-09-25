@@ -21,7 +21,7 @@ display = SSD1331(display_bus, width=96, height=64)
 
 # Make the display context
 splash = displayio.Group()
-display.show(splash)
+display.root_group = splash
 
 color_bitmap = displayio.Bitmap(96, 64, 1)
 color_palette = displayio.Palette(1)
