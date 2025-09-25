@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2
   tf2_ros
   tf2_geometry_msgs
+  tf2_eigen
 )
 
 add_subdirectory(libs/spot_micro_kinematics_cpp)
@@ -110,7 +111,7 @@ add_subdirectory(libs/spot_micro_kinematics_cpp)
 catkin_package(
   INCLUDE_DIRS include/spot_micro_motion_cmd
 #  LIBRARIES spot_micro_motion_cmd
-  CATKIN_DEPENDS roscpp std_msgs geometry_msgs tf2 tf2_ros
+  CATKIN_DEPENDS roscpp std_msgs geometry_msgs tf2 tf2_ros tf2_eigen
 #  DEPENDS system_lib
 )
 
