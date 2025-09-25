@@ -34,12 +34,5 @@ class ButtonNode:
 
 if __name__ == '__main__':
     cooldown = rospy.get_param('~cooldown', 0.5)
-
-    # Check if the script is running as root (sudo)
-    if os.geteuid() == 0:
-        # The script is running as root (sudo), no need to use sudo again.
-        button_node = ButtonNode(cooldown)
-    else:
-        # The script is not running as root, use sudo to run the script with elevated permissions.
-        os.system(f"sudo {sys.executable} {os.path.realpath(__file__)}")
-
+    button_node = ButtonNode(cooldown)
+    button_node.run()
